@@ -1,7 +1,8 @@
-if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>');
+if(location.host.indexOf(':8000') != -1) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>');
 /*
  * 제작자  : 싸이웍스 - 임희재프로
- * 버전    : v.03 
+ * 버전    : v.05
+ * 수정내용 : getParams 수정
  */
 /*
  * smartresize 기반의 resize개념
@@ -10,16 +11,16 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
 (function($, sr) {
     var debounce = function(func, threshold, execAsap) {
         var timeout;
-        return function debounced() {
+        return function debounced() { 
             var obj = this,
                 args = arguments;
 
             function delayed() {
-                if (!execAsap) func.apply(obj, args);
+                if(!execAsap) func.apply(obj, args);
                 timeout = null;
             };
-            if (timeout) clearTimeout(timeout);
-            else if (execAsap) func.apply(obj, args);
+            if(timeout) clearTimeout(timeout);
+            else if(execAsap) func.apply(obj, args);
             timeout = setTimeout(delayed, threshold || 150);
         };
     }
@@ -32,24 +33,25 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
 (function($) {
     $.fn.extend({
         include: function(bool) {
-            if (bool) {
+            if(bool) {
                 var include = [
                     ['header', {
-                        target: '.header',
-                        url: '/include/header.html',
+                        target: '.nm_header',
+                        url: './reRsrc/include/header.html',
                         get: 'on'
                     }],
                     ['footer', {
-                        target: '.footer',
-                        url: '/include/footer.html',
+                        target: '.nm_footer',
+                        url: './reRsrc/include/footer.html',
                         get: 'on'
                     }],
+                    /*
                     ['asideNav', {
                         target: '.aside_area',
                         url: '/include/asideNav.html',
                         get: 'on'
                     }],
-                    /*
+                        
                     ['toolbar', {
                         target: '.toolbar',
                         url: '/include/toolbar.html',
@@ -64,9 +66,9 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                         });
                     });
                 }
-                for (var i = 0; i < include.length; i++) {
-                    if (include[i]) {
-                        if (include[i][1].get == 'on') {
+                for(var i = 0; i < include.length; i++) {
+                    if(include[i]) {
+                        if(include[i][1].get == 'on') {
                             var $getUrl = $.get(include[i][1].url);
                             var target = include[i][1].target;
                             appendHtml(target);
@@ -75,17 +77,70 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                 }
             }
         },
-        getParams: function(param, str) {
-            var url = location.search;
-            var arry = url.split(str ? str : '?');
-            var result = null;
-            for (var i = 0; i < arry.length; i++) {
-                if (arry[i] && arry[i].indexOf(param) != -1) {
-                    var resArry = arry[i].split('=');
-                    result = resArry[1];
-                }
+        multiEllip: function(opt) {
+            var defaults = {
+                len: 0,
+                ellips: '...',
+                space: false,
+                initTxtAppend: true,
+            };
+
+            function MultiEllip($this) {
+                this.el = $this;
+                this.txt = '';
+                this.initTxt = '';
+                this.obj = $.extend(true, defaults, opt);
+                this.init();
+            };
+            MultiEllip.prototype = {
+                init: function() {
+                    this.set();
+                },
+                set: function() {
+                    var _this = this;
+                    this.el.each(function() {
+                        var $thistxt = $(this).text();
+                        _this.initTxt = $thistxt;
+                        if(_this.obj.initTxtAppend) {
+                            _this.append();
+                        }
+                        _this.slc($thistxt);
+                    });
+                },
+                append: function() {
+                    this.el.after('<span class="mult_init_txt multInitTxt" style="display: none;">' + this.initTxt + '</span>');
+                },
+                slc: function(txt) {
+                    var txt = txt.replace(/(^\s*)|(\s*$)/g, '');
+                    var len = this.obj.space ? txt.replace(/ /gi, '').length : txt.length;
+                    if(len > this.obj.len) {
+                        this.txt = txt.slice(0, this.obj.len);
+                        this.el.text(this.txt + this.obj.ellips);
+                    }
+                },
+            };
+            this.each(function() {
+                $.data(this, new MultiEllip($(this), opt));
+            });
+            return this;
+        },
+        getParams: function(param, str, amp, url) {
+            var url = url ? url : location.search;
+            if(url) {
+                var arry = url.split(str ? str : '?');
+                var amp = amp ? amp : '&';
+                var result = null;
+                var arryDp = arry[1].split(amp);
+                arryDp.forEach(function(loc) {
+                    var resArry = loc.split('=');
+                    for(var i = 0; i < resArry.length; i++) {
+                        if(resArry[0] == param) {
+                            result = resArry[1];
+                        }
+                    }
+                });
+                return result;
             }
-            return result;
         },
         mapApiSortFun: function(obj) {
             var defaults = {
@@ -201,6 +256,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                 tabAnimate: false,
                 tabAnitype: '',
                 tabhref: '.href',
+                tabInSlide: false,
                 callb: function() {},
             };
 
@@ -213,7 +269,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
             };
             CmmShowHideTabs.prototype = {
                 init: function() {
-                    if (!this.tabWrap.is(this.obj.tabhref)) {
+                    if(!this.tabWrap.is(this.obj.tabhref)) {
                         this.set();
                         this.bind();
                     } else {
@@ -221,7 +277,14 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     }
                 },
                 set: function() {
-                    $(this.tabWrap).find(this.obj.tabDivs + '>div,' + this.obj.tabDivs + '>ul').hide();
+                    if(this.obj.tabInSlide) {
+                        $(this.tabWrap).find(this.obj.tabDivs + '>div,' + this.obj.tabDivs + '>ul').css({
+                            'overflow': 'hidden',
+                            'height': 0
+                        });
+                    } else {
+                        $(this.tabWrap).find(this.obj.tabDivs + '>div,' + this.obj.tabDivs + '>ul').hide();
+                    }
                 },
                 bind: function() {
                     var _this = this;
@@ -234,14 +297,25 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                             return false;
                         },
                     });
-                    this.tabWrap.find(this.obj.tabUl + '>li:eq(0)').click();
+                    _this.tabWrap.find(_this.obj.tabUl + '>li:eq(0)').click();
                 },
                 show: function() {
                     this.tabWrap.find(this.obj.tabUl + '>li').removeClass('active');
                     this.li.addClass('active');
-                    $(this.tabWrap).find(this.obj.tabDivs + '>div,' + this.obj.tabDivs + '>ul').hide();
-                    $(this.tabWrap).find(this.obj.tabDivs + '>div:eq(' + this.idx + ') ,' + this.obj.tabDivs + '>ul:eq(' + this.idx + ')').show();
-                    if (typeof this.obj.callb === 'function') {
+                    if(this.obj.tabInSlide) {
+                        $(this.tabWrap).find(this.obj.tabDivs + '>div,' + this.obj.tabDivs + '>ul').css({
+                            'overflow': 'hidden',
+                            'height': 0
+                        });
+                        $(this.tabWrap).find(this.obj.tabDivs + '>div:eq(' + this.idx + ') ,' + this.obj.tabDivs + '>ul:eq(' + this.idx + ')').css({
+                            'overflow': 'visible',
+                            'height': 'auto'
+                        });
+                    } else {
+                        $(this.tabWrap).find(this.obj.tabDivs + '>div,' + this.obj.tabDivs + '>ul').hide();
+                        $(this.tabWrap).find(this.obj.tabDivs + '>div:eq(' + this.idx + ') ,' + this.obj.tabDivs + '>ul:eq(' + this.idx + ')').show();
+                    }
+                    if(typeof this.obj.callb === 'function') {
                         this.obj.callb(this.tabWrap, this.idx, this.li);
                     }
                 },
@@ -249,7 +323,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     var _this = this;
                     this.tabWrap.attr('data-coldiv');
                     this.tabWrap.find(this.obj.tabUl + '>li').each(function() {
-                        if ($(this).is('.active')) {
+                        if($(this).is('.active')) {
                             var $color = $(this).find('.txt').attr('data-color');
                             _this.tabWrap.attr('data-coldiv', $color);
                         }
@@ -302,7 +376,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     var w = Math.floor(this.el.width() / thisOtp.width);
                     var boxw = 100 / w;
                     this.col = w;
-                    for (var i = 0; i < this.col; i++) {
+                    for(var i = 0; i < this.col; i++) {
                         var div = $('<div></div>').addClass(this.itemGroup).css({
                             'width': boxw + '%',
                             'float': 'left',
@@ -325,25 +399,25 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                         $this.css({
                             'padding': _this.opt.setBox.margin / 2
                         });
-                        if (idx % _this.col == 0) {
+                        if(idx % _this.col == 0) {
                             num = 0;
                         }
                         $this.attr('itemGroupBox', num);
                         var $thisGroupNum = $this.attr('itemGroupBox');
                         $('.' + _this.itemGroup + '[itemgroup="' + $thisGroupNum + '"]').append($this);
-                        if (resizeYN != 'N') _this.renderAnimate($this, idx);
+                        if(resizeYN != 'N') _this.renderAnimate($this, idx);
                     });
                 },
                 renderAnimate: function($this, idx) {
                     var thisOpt = this.opt.animateOfOptions;
-                    if (this.opt.animate) {
+                    if(this.opt.animate) {
                         var funs = function() {};
-                        if (!thisOpt.queue) {
+                        if(!thisOpt.queue) {
                             var time = idx * 150;
                         } else {
                             var time = 0;
                         }
-                        switch (thisOpt.mode) {
+                        switch(thisOpt.mode) {
                             case 'flip':
                                 $this.css({
                                     'display': 'none'
@@ -375,7 +449,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                         }
                         setTimeout(funs, time);
                     }
-                    if (typeof this.opt.animateAfterCallb === 'function') {
+                    if(typeof this.opt.animateAfterCallb === 'function') {
                         this.opt.animateAfterCallb();
                     }
                 },
@@ -427,7 +501,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                         ease: 'easeInExpo',
                         complete: function() {}
                     };
-                    if (typeof o === 'object') {
+                    if(typeof o === 'object') {
                         var $exCb = $.extend(true, cb, o);
                         return $exCb;
                     }
@@ -440,15 +514,15 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                 },
                 slickSlide: function() {
                     $this.slick($.extend(true, {}, this.obj.slideObj));
-                    if (typeof this.obj.callb === 'function') {
+                    if(typeof this.obj.callb === 'function') {
                         $this.on({
-                            'afterChange swipe edge': this.obj.callb
+                            'beforeChange swipe edge': this.obj.callb
                         });
                     }
                     this.initButtons();
                 },
                 initButtons: function() {
-                    if (typeof this.obj.uiBtnsApp !== 'object') {
+                    if(typeof this.obj.uiBtnsApp !== 'object') {
                         $this.find('.slick-prev').show();
                         $this.find('.slick-next').show();
                         return;
@@ -469,10 +543,10 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     };
                     $this.parent().append('<div class="' + uiBtnsAppTarget + '"></div>');
                     var $uiBtnsAppTarget = $this.parent().find('.' + uiBtnsAppTarget);
-                    for (var i in buttons) {
+                    for(var i in buttons) {
                         var buttonsVal = buttons[i];
                         var html = '';
-                        switch (i) {
+                        switch(i) {
                             case 'uiPrev':
                                 html = $('<a href="#" class="uislide_prev ' + buttonsVal + '" title="이전슬라이드"></a>');
                                 break;
@@ -480,17 +554,17 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                                 html = $('<a href="#" class="uislide_next ' + buttonsVal + '" title="다음슬라이드"></a>');
                                 break;
                             case 'uiPause':
-                                if (this.obj.slideObj.autoplay) {
+                                if(this.obj.slideObj.autoplay) {
                                     html = $('<a href="#" class="uislide_pause ' + buttonsVal + '" title="슬라이드 일시정지"></a>');
                                 }
                                 break;
                             case 'uiPlay':
-                                if (this.obj.slideObj.autoplay) {
+                                if(this.obj.slideObj.autoplay) {
                                     html = $('<a href="#" class="uislide_play ' + buttonsVal + '" title="슬라이드 재생"></a>');
                                 }
                                 break;
                             case 'uiShortDot':
-                                if (this.obj.uiBtnsApp.uiShortDot) {
+                                if(this.obj.uiBtnsApp.uiShortDot) {
                                     html = $('<div class="uislide_shortdot ' + buttonsVal + '"></div>');
                                 }
                                 break;
@@ -499,10 +573,10 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                         }
                         $uiBtnsAppTarget.append(html);
                     }
-                    if (this.obj.slideObj.dots) {
-                        if (this.obj.dotThumb) {
+                    if(this.obj.slideObj.dots) {
+                        if(this.obj.dotThumb) {
                             this.dotThumb(buttons);
-                        } else if (this.obj.dotTabs && this.obj.dotTabsLst) {
+                        } else if(this.obj.dotTabs && this.obj.dotTabsLst) {
                             var _this = this;
                             this.dotTabs();
                             $this.on({
@@ -512,7 +586,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                             });
                         }
                     }
-                    if (this.obj.uiBtnsApp.uiShortDot) {
+                    if(this.obj.uiBtnsApp.uiShortDot) {
                         var _this = this;
                         this.dotShort(buttons);
                         $this.on({
@@ -529,7 +603,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                         var $thisIdx = $(this).index();
                         var imgSrc = '';
                         $this.find('.slick-slide').each(function() {
-                            if ($(this).data('slick-index') == $thisIdx) {
+                            if($(this).data('slick-index') == $thisIdx) {
                                 imgSrc = $(this).find('img').attr('src');
                             }
                         });
@@ -541,11 +615,11 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     var $activeDot = null;
                     var allTxt = $dots.length;
                     $dots.each(function() {
-                        if ($(this).is('.slick-active')) {
+                        if($(this).is('.slick-active')) {
                             $activeDot = $(this).index() + 1;
                         }
                     });
-                    if (!$activeDot) $activeDot = 0;
+                    if(!$activeDot) $activeDot = 0;
                     $this.parent().find('.' + buttons.uiShortDot).text($activeDot + '/' + allTxt);
                 },
                 dotTabs: function() {
@@ -555,7 +629,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     var $dots = $this.parent().find('.slick-dots');
                     var $activeDot = null;
                     $dots.find('li').each(function() {
-                        if ($(this).is('.slick-active')) {
+                        if($(this).is('.slick-active')) {
                             $activeDot = $(this).index();
                         }
                     });
@@ -572,7 +646,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                 },
                 buttonsEvent: function(buttons) {
                     //$this.parent().find('.' + buttons.uiPause).css('opacity', 1);
-                    $this.parent().find('.' + buttons.uiPlay).css('opacity', .3);
+                    $this.parent().find('.' + buttons.uiPlay).css('opacity', .5);
                     $this.parent().find('.' + buttons.uiPrev).on({
                         'click': function() {
                             $this.find('.slick-prev').click();
@@ -588,7 +662,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     $this.parent().find('.' + buttons.uiPause).on({
                         'click': function() {
                             $this.slick('slickPause');
-                            $(this).css('opacity', .3);
+                            $(this).css('opacity', .5);
                             $this.parent().find('.' + buttons.uiPlay).css('opacity', 1);
                             return false;
                         }
@@ -596,12 +670,12 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     $this.parent().find('.' + buttons.uiPlay).on({
                         'click': function() {
                             $this.slick('slickPlay');
-                            $(this).css('opacity', .3);
+                            $(this).css('opacity', .5);
                             $this.parent().find('.' + buttons.uiPause).css('opacity', 1);
                             return false;
                         }
                     });
-                    if (typeof this.obj.uicallback === 'function') {
+                    if(typeof this.obj.uicallback === 'function') {
                         this.obj.uicallback();
                     }
                 },
@@ -655,7 +729,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     $thisTarget.css({
                         'overflow': 'hidden'
                     });
-                    for (var i = 1; i <= dots.leng; i++) {
+                    for(var i = 1; i <= dots.leng; i++) {
                         var _this = this;
                         var random = Math.random();
                         var ran = Math.floor(random * (dots.maxw - dots.minw + 1)) + dots.minw;
@@ -682,7 +756,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                             'easing': 'easeInExpo'
                         });
                     }
-                    if (typeof dots.css === 'object') {
+                    if(typeof dots.css === 'object') {
                         $thisTarget.find('span').css(dots.css);
                     }
                 },
@@ -704,8 +778,8 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     });
                     $thisTarget.on({
                         'mousemove': function(e) {
-                            if (true) {
-                                if (!moveObj.rever) {
+                            if(true) {
+                                if(!moveObj.rever) {
                                     var distance = {
                                         x: event.pageX > lastPos.x ? moveObj.distance : -moveObj.distance,
                                         y: event.pageY > lastPos.y ? moveObj.distance : -moveObj.distance,
@@ -720,10 +794,10 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                                     x: event.pageX,
                                     y: event.pageY
                                 };
-                                for (var i = 0; i < leftArry.length; i++) {
-                                    if (moveObj.dir == 'h') {
+                                for(var i = 0; i < leftArry.length; i++) {
+                                    if(moveObj.dir == 'h') {
                                         var aa = leftArry.length / 2;
-                                        if (i <= aa) {
+                                        if(i <= aa) {
                                             $(this).find('span:eq(' + i + ')').stop().animate({
                                                 'left': leftArry[i] + distance.x,
                                             }, {
@@ -738,14 +812,14 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                                                 'easing': 'easeOutExpo'
                                             });
                                         }
-                                    } else if (moveObj.dir == 'v') {
+                                    } else if(moveObj.dir == 'v') {
                                         $(this).find('span:eq(' + i + ')').stop().animate({
                                             'top': topArry[i] + distance.y
                                         }, {
                                             'duration': moveObj.delay,
                                             'easing': 'easeInExpo'
                                         });
-                                    } else if (moveObj.dir == 'vh') {
+                                    } else if(moveObj.dir == 'vh') {
                                         $(this).find('span:eq(' + i + ')').stop().animate({
                                             'left': leftArry[i] + distance.x,
                                             'top': topArry[i] + distance.y
@@ -758,7 +832,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                             }
                         },
                         'mouseleave': function() {
-                            for (var i = 0; i < leftArry.length; i++) {
+                            for(var i = 0; i < leftArry.length; i++) {
                                 $(this).find('span:eq(' + i + ')').stop().animate({
                                     'left': leftArry[i],
                                     'top': topArry[i]
@@ -855,7 +929,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     var last = [
                         31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
                     ];
-                    if (this.y % 4 && this.y % 100 != 0 || this.y % 400 === 0) {
+                    if(this.y % 4 && this.y % 100 != 0 || this.y % 400 === 0) {
                         lastDate = last[1] = 29;
                     }
                     var lastDate = last[this.m];
@@ -869,7 +943,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     calendar += "<div class='calTheadGroup'>";
                     calendar += "<table class='calendar_table'>";
                     calendar += "<colgroup>";
-                    for (var i = 0; i < commColgroup[0]; i++) {
+                    for(var i = 0; i < commColgroup[0]; i++) {
                         calendar += "<col width='" + commColgroup[1] + "'/>";
                     }
                     calendar += "</colgroup>";
@@ -887,18 +961,18 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     calendar += "</table>";
                     calendar += "</div>"; // calTheadGroup
                     var dNum = 1;
-                    for (var i = 1; i <= row; i++) {
+                    for(var i = 1; i <= row; i++) {
                         calendar += "<div class='calTbodyGroup'>";
                         calendar += "<table class='calendar_table'>";
                         calendar += "<colgroup>";
-                        for (var o = 0; o < commColgroup[0]; o++) {
+                        for(var o = 0; o < commColgroup[0]; o++) {
                             calendar += "<col width='" + commColgroup[1] + "'/>";
                         }
                         calendar += "</colgroup>";
                         calendar += "<tbody>";
                         calendar += "<tr>";
-                        for (var k = 1; k <= 7; k++) {
-                            if (i === 1 && k <= this.theDay || dNum > lastDate) {
+                        for(var k = 1; k <= 7; k++) {
+                            if(i === 1 && k <= this.theDay || dNum > lastDate) {
                                 calendar += "<td> &nbsp; </td>";
                             } else {
                                 calendar += "<td>" + dNum + "</td>";
@@ -927,21 +1001,21 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     html += '<colgroup><col width="14.285%"><col width="14.285%"><col width="14.285%"><col width="14.285%"><col width="14.285%"><col width="14.285%"><col width="14.285%"></colgroup>';
                     html += '<tbody>';
                     html += '<tr>';
-                    for (var i = 0; i < 7; i++) {
+                    for(var i = 0; i < 7; i++) {
                         html += '<td>&nbsp;</td>';
                     }
                     html += '</tr>';
                     html += '</tbody>';
                     html += '</table>';
                     html += '</div>';
-                    for (var i = 0; i < this.opt.sch.schItem.length; i++) {
+                    for(var i = 0; i < this.opt.sch.schItem.length; i++) {
                         var time = '<td class="txt_left"><b>' + this.opt.sch.schItem[i][5] + '</b></td>';
                         var suj = '<td class="txt_left">' + this.opt.sch.schItem[i][2] + '</td>';
                         var suj2 = '<td class="txt_left">' + this.opt.sch.schItem[i][4] + '</td>';
                         $calTbl.find('tbody').append('<tr>' + time + suj + suj2 + '</tr>');
                     }
                     $calTbodyGroup.each(function() {
-                        for (var i = 0; i < _this.opt.sch.schMax; i++) {
+                        for(var i = 0; i < _this.opt.sch.schMax; i++) {
                             $(this).append(html);
                         }
                     });
@@ -949,14 +1023,14 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                 schParsing: function() {
                     var _this = this;
                     var $tbl = $('.calTbodyGroup .calendar_table');
-                    for (var i = 0; i < this.opt.sch.schItem.length; i++) {
+                    for(var i = 0; i < this.opt.sch.schItem.length; i++) {
                         $tbl.find('td').each(function() {
                             var $thisIdx = $(this).index();
                             var $thisTxt = $(this).text();
                             var $thisParent = $(this).closest('.calTbodyGroup');
-                            if ($thisTxt == _this.opt.sch.schItem[i][1]) {
-                                if (_this.opt.sch.schItem[i][0] != 1) {
-                                    for (var o = 1; o < _this.opt.sch.schItem[i][0]; o++) {
+                            if($thisTxt == _this.opt.sch.schItem[i][1]) {
+                                if(_this.opt.sch.schItem[i][0] != 1) {
+                                    for(var o = 1; o < _this.opt.sch.schItem[i][0]; o++) {
                                         $thisParent.find('.scVirTableGroup td:eq(' + $thisIdx + ')').next().remove();
                                     }
                                 }
@@ -1047,7 +1121,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     var _this = this;
                     var motions = this.obj.motions;
                     var transform = null;
-                    for (var i = 0; i < motions.length; i++) {
+                    for(var i = 0; i < motions.length; i++) {
                         var distance = function() {
                             var x = (crtOffsetX - _this.setOffsetX) * (motions[i][2] * 0.01);
                             var y = (crtOffsetY - _this.setOffsetY) * (motions[i][3] * 0.01);
@@ -1060,7 +1134,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                                 ry: ry
                             };
                         };
-                        if (direction == 'reset') {
+                        if(direction == 'reset') {
                             transform = '';
                         } else {
                             transform = 'translateX(' + distance().x + 'px) translateY(' + distance().y + 'px) rotateX(' + distance().ry + 'deg) rotateY( ' + distance().rx + 'deg)';
@@ -1119,11 +1193,11 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     var $target = $(this.obj.list.left + ',' + this.obj.list.right).find('>li');
                     $target.off().on({
                         'click': function() {
-                            if ($(this).is('.active')) {
+                            if($(this).is('.active')) {
                                 $(this).removeClass('active');
                                 return;
                             }
-                            if (!_this.dupChk) {
+                            if(!_this.dupChk) {
                                 $target.removeClass('active');
                             }
                             $(this).addClass('active');
@@ -1160,8 +1234,8 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     var $this = null;
                     _this.arry = [];
                     this.el.find(this.obj.list.left + '>li').each(function() {
-                        if ($(this).is('.active')) {
-                            switch (type) {
+                        if($(this).is('.active')) {
+                            switch(type) {
                                 case 'up':
                                     $(this).prev().before($(this));
                                     break;
@@ -1177,8 +1251,8 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                             }
                         }
                     });
-                    if (type == 'down') {
-                        for (var i = 0; i < this.arry.length; i++) {
+                    if(type == 'down') {
+                        for(var i = 0; i < this.arry.length; i++) {
                             this.el.find(this.obj.list.left + '>li:eq(' + (this.arry[i][1] + 1) + ')').after(this.arry[i][0]);
                         }
                     }
@@ -1195,20 +1269,20 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                 },
                 moving: function(btnType) {
                     var lst = this.obj.list;
-                    if (btnType == $(this.obj.btns.right)[0]) {
+                    if(btnType == $(this.obj.btns.right)[0]) {
                         $(lst.left).find('>li').each(function() {
-                            if ($(this).is('.active')) {
+                            if($(this).is('.active')) {
                                 $(lst.right).append($(this));
                             }
                         });
                     } else {
                         $(lst.right).find('>li').each(function() {
-                            if ($(this).is('.active')) {
+                            if($(this).is('.active')) {
                                 $(lst.left).append($(this));
                             }
                         });
                     }
-                    if (typeof this.obj.callb === 'function') {
+                    if(typeof this.obj.callb === 'function') {
                         this.obj.callb();
                     }
                 },
@@ -1246,9 +1320,9 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     scrh: $this[0].scrollHeight,
                 };
                 this.scrClassName = {
-                    wrap : 'scrWrap',
-                    btn : 'scrBtn',
-                    bar : 'scrBar',
+                    wrap: 'scrWrap',
+                    btn: 'scrBtn',
+                    bar: 'scrBar',
                 };
                 this.html = '';
                 this.obj = $.extend(true, defaults, obj);
@@ -1256,30 +1330,30 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
             };
             CustomScrollBar.prototype = {
                 init: function() {
-                    if (this.scr.outw > this.scr.scrw) {
+                    if(this.scr.outw > this.scr.scrw) {
                         this.set();
                         this.bind();
                     }
                 },
                 set: function() {
                     var $this = this.el;
-                    this.html = '<div class="' + this.obj.scrEl.el + ' '+this.scrClassName.bar+'"><span class="' + this.obj.scrEl.btn + ' '+this.scrClassName.btn+'"></span></div>';
+                    this.html = '<div class="' + this.obj.scrEl.el + ' ' + this.scrClassName.bar + '"><span class="' + this.obj.scrEl.btn + ' ' + this.scrClassName.btn + '"></span></div>';
                     var scrBtnHei = (this.scr.outh / this.scr.scrh) * 100;
-                    if (!$this.closest('.'+this.scrClassName.wrap).length) {
-                        $this.wrap('<div class="' + this.obj.scrEl.bx + ' '+this.scrClassName.wrap+'" style="width:' + this.scr.outw + 'px; overflow: hidden;"></div>').css({
+                    if(!$this.closest('.' + this.scrClassName.wrap).length) {
+                        $this.wrap('<div class="' + this.obj.scrEl.bx + ' ' + this.scrClassName.wrap + '" style="width:' + this.scr.outw + 'px; overflow: hidden;"></div>').css({
                             'margin-right': -(this.scr.outw - this.scr.scrw),
                             'padding-right': this.scr.outw - this.scr.scrw,
                         });
-                        $this.closest('.'+this.scrClassName.wrap).append(this.html);
+                        $this.closest('.' + this.scrClassName.wrap).append(this.html);
                     }
-                    $this.closest('.'+this.scrClassName.wrap).find('.'+this.scrClassName.btn).css('height', scrBtnHei + '%');
+                    $this.closest('.' + this.scrClassName.wrap).find('.' + this.scrClassName.btn).css('height', scrBtnHei + '%');
                 },
                 bind: function() {
                     var _this = this;
                     var $this = this.el;
-                    var $thisWrap = $this.closest('.'+this.scrClassName.wrap);
-                    var $thisBar = $thisWrap.find('.'+this.scrClassName.bar);
-                    var $thisBtn = $thisWrap.find('.'+this.scrClassName.btn);
+                    var $thisWrap = $this.closest('.' + this.scrClassName.wrap);
+                    var $thisBar = $thisWrap.find('.' + this.scrClassName.bar);
+                    var $thisBtn = $thisWrap.find('.' + this.scrClassName.btn);
                     var vScrVal = 0;
                     var scrBarHei = Math.round($thisBar.height() - $thisBtn.height());
                     var scrInnerHei = $this.find('>*').height() - $this.height();
@@ -1291,17 +1365,17 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     $thisBtn.mousedown(function() {
                         $(window).scrollTop(0);
                     });
-                    if (this.drag) {
+                    if(this.drag) {
                         $thisBtn.draggable({
-                        scroll: false,
-                        axis: "y",
-                        containment: $thisBar[0],
-                        drag: function() {
-                            $top = Number($thisBtn.css('top').replace('px', ''));
-                            vScrVal = Math.round((scrInnerHei * $top) / scrBarHei);
-                            _this.el.scrollTop(vScrVal);
-                        },
-                    });
+                            scroll: false,
+                            axis: "y",
+                            containment: $thisBar[0],
+                            drag: function() {
+                                $top = Number($thisBtn.css('top').replace('px', ''));
+                                vScrVal = Math.round((scrInnerHei * $top) / scrBarHei);
+                                _this.el.scrollTop(vScrVal);
+                            },
+                        });
                     }
 
                 },
@@ -1331,7 +1405,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                 this.obj = $.extend(true, defaults, obj);
                 this.clientXArry = [];
                 this.movedir = function(dirobj) {
-                    if (dirobj) {
+                    if(dirobj) {
                         return $.extend(true, {
                             'start': null,
                             'end': null
@@ -1376,10 +1450,10 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                         'start': distanceStart,
                         'end': distanceEnd
                     });
-                    if (Math.abs(movedir.start - movedir.end) > this.obj.minDistance) this.move(movedir);
+                    if(Math.abs(movedir.start - movedir.end) > this.obj.minDistance) this.move(movedir);
                 },
                 move: function(movedir) {
-                    if (movedir.start > movedir.end) { // 열기
+                    if(movedir.start > movedir.end) { // 열기
                         this.el.stop().animate({
                             'transform': 'translateX(-' + this.obj.maxDistance + 'px)'
                         }, this.acallb);
@@ -1410,10 +1484,10 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                 this.el = $this;
                 this.obj = $.extend(true, defaults, obj);
                 this.w = function() {
-                    return (this.obj.value.current / this.obj.value.max) * 100;
+                    return(this.obj.value.current / this.obj.value.max) * 100;
                 };
                 this.init();
-                if (this.obj.responsive) {
+                if(this.obj.responsive) {
                     $(window).smartresize(function() {
                         _this.resize();
                     });
@@ -1425,8 +1499,8 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     this.move();
                 },
                 settings: function() {
-                    if (this.obj.imgcut.stepimgs) {
-                        for (var i = 1; i < this.obj.imgcut.stepimgs.length; i++) {
+                    if(this.obj.imgcut.stepimgs) {
+                        for(var i = 1; i < this.obj.imgcut.stepimgs.length; i++) {
                             this.el.append($('<i></i>').addClass(this.obj.lineClassName + ' ' + this.obj.lineClassName + (i - 1)));
                         }
                     }
@@ -1435,7 +1509,7 @@ if (location.host.indexOf(':8000') != -1) document.write('<script src="http://' 
                     var imgcut = this.obj.imgcut;
                     var cnt = 0;
                     var num = 0;
-                    while (!(this.w() - cnt <= (100 / imgcut.stepimgs.length))) {
+                    while(!(this.w() - cnt <= (100 / imgcut.stepimgs.length))) {
                         cnt += 100 / imgcut.stepimgs.length;
                         num++;
                     }
