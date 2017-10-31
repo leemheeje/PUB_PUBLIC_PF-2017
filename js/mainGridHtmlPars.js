@@ -169,7 +169,7 @@ var mainGridHtml = {
                 break;
             }
             this.html += '<div class="item">';
-            this.html += '<a href="/sub.html?pageNum=' + i + '">';
+            this.html += '<a href="./sub.html?pageNum=' + i + '">';
             this.html += '<div class="ppgr_inner">';
             this.html += '<span class="ppgr_img">';
             this.html += '<img src="' + this.items[i].img + '" alt="작업물이미지" />';
