@@ -1,6 +1,6 @@
 @charset "utf-8";
-@import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");
-@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url("//fonts.googleapis.com/earlyaccess/nanumgothic.css");
+@import url('//fonts.googleapis.com/css?family=Pacifico');
 
 /* Reset */
 html,body{width:100%;height:100%}
