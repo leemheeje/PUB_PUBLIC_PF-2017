@@ -72,7 +72,7 @@ img{max-width: 100%; vertical-align: top; -webkit-touch-callout: none; -webkit-u
 .contents .cen_box,
 .contents .rig_box{width: 100%; box-sizing: border-box; }
 .contents .rig_box{display: none; }
-.contents .rig_box .bx_in{overflow-y: auto; max-height: 500px;}
+.contents .rig_box .bx_in{overflow-y: auto; max-height: 800px;}
 .contents .rig_box .bx_in .tit{font-size: 12px; line-height: 1.8; min-height: 22px; color: #222; font-weight: bold; margin-bottom: 7px;}
 .contents .rig_box .pf_lst{margin: -4px 0;}
 .contents .rig_box .pf_lst li a{display: block; padding: 4px 0; position: relative; padding-left: 17px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px;}
