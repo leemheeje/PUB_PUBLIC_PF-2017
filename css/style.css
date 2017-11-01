@@ -23,7 +23,7 @@ img{max-width: 100%; vertical-align: top; -webkit-touch-callout: none; -webkit-u
 .header{padding: 35px 0; background: #fff;}
 .header_inner{max-width: 1200px; margin: 0 auto; font-size: 0;}
 .h_logo{display: inline-block; vertical-align: bottom; width: 20%;}
-.h_logo .logo{display: inline-block; width: 100%; max-width: 138px; height: 52px; background: url(/images/logo.png) no-repeat left top; background-size: 100% auto;}
+.h_logo .logo{display: inline-block; width: 100%; max-width: 138px; height: 52px; background: url(../images/logo.png) no-repeat left top; background-size: 100% auto;}
 .h_nav{display: inline-block; vertical-align: bottom; width: 80%; text-align: right;}
 .h_nav .nitems{display: inline-block;}
 .h_nav .nitems a{display: inline-block; padding: 0 15px; font-size: 14px; color: #000; font-weight: 600;}
