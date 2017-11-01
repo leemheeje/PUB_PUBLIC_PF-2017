@@ -37,12 +37,12 @@ if(location.host.indexOf(':8000') != -1) document.write('<script src="http://' +
                 var include = [
                     ['header', {
                         target: '.nm_header',
-                        url: '../include/header.html',
+                        url: '/public/include/header.html',
                         get: 'on'
                     }],
                     ['footer', {
                         target: '.nm_footer',
-                        url: '../include/footer.html',
+                        url: '/public/include/footer.html',
                         get: 'on'
                     }],
                     /*
