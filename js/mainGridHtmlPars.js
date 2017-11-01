@@ -28,7 +28,7 @@ var mainGridHtml = {
     },{
         img: './images/pp_img20.jpg',
         subImgs: ['./images/pp_img20_01.jpg', './images/pp_img20_02.jpg', './images/pp_img11_03.jpg', './images/pp_img11_04.jpg', './images/pp_img11_05.jpg', './images/pp_img11_06.jpg'],
-        tit: '강남구청-인터넷수능방송-WEB',
+        tit: '강남구청-인터넷수능방송-PC',
         subj: '언어, 수리, 외국어, 사회탐구, 논술 등 인터넷강좌 안내, 입시 정보, 수능 후기.',
         mode: 'js,web,IE8++',
         href: 'http://edu.ingang.go.kr/NGLMS/High/UserMain.do',
