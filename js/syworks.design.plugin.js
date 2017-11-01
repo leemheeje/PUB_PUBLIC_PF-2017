@@ -36,13 +36,13 @@ if(location.host.indexOf(':8000') != -1) document.write('<script src="http://' +
             if(bool) {
                 var include = [
                     ['header', {
-                        target: '.nm_header',
+                        target: '.header',
                         url: '/public/include/header.html',
                         get: 'on'
                     }],
                     ['footer', {
-                        target: '.nm_footer',
-                        url: '/public/include/footer.html',
+                        target: '.toolbar',
+                        url: '/public/include/toolbar.html',
                         get: 'on'
                     }],
                     /*
