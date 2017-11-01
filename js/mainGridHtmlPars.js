@@ -10,8 +10,8 @@ var mainGridHtml = {
     },
     //res,IE8++,js,cms,tmc,hyb
     items: [{
-        img: './images/pp_img21.jpg',
-        subImgs: [],
+        img: './images/pp_img22.jpg',
+        subImgs: ['./images/pp_img22_01.jpg','./images/pp_img22_02.jpg','./images/pp_img22_03.jpg','./images/pp_img22_04.jpg','./images/pp_img22_05.jpg'],
         tit: '한국과학창의재단-크레존',
         subj: '창의체험활동, 창의체험 프로그램, 창의인성교육, 현장체험학습, 지속가능발전교육, 자유학기제 체험활...',
         mode: 'cms,js,res,IE9++',
