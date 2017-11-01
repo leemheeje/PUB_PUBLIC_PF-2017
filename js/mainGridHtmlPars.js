@@ -10,6 +10,30 @@ var mainGridHtml = {
     },
     //res,IE8++,js,cms,tmc,hyb
     items: [{
+        img: './images/pp_img21.jpg',
+        subImgs: [],
+        tit: '한국과학창의재단-크레존',
+        subj: '창의체험활동, 창의체험 프로그램, 창의인성교육, 현장체험학습, 지속가능발전교육, 자유학기제 체험활...',
+        mode: 'cms,js,res,IE9++',
+        href: 'http://edu.ingang.go.kr/NGLMS/High/UserMain.do',
+        chat: 80,
+    },{
+        img: './images/pp_img21.jpg',
+        subImgs: [],
+        tit: '강남구청-인터넷수능방송',
+        subj: '언어, 수리, 외국어, 사회탐구, 논술 등 인터넷강좌 안내, 입시 정보, 수능 후기.',
+        mode: 'js',
+        href: 'http://edu.ingang.go.kr/NGLMS/High/UserMain.do',
+        chat: 50,
+    },{
+        img: './images/pp_img20.jpg',
+        subImgs: ['./images/pp_img20_01.jpg', './images/pp_img20_02.jpg', './images/pp_img11_03.jpg', './images/pp_img11_04.jpg', './images/pp_img11_05.jpg', './images/pp_img11_06.jpg'],
+        tit: '강남구청-인터넷수능방송',
+        subj: '언어, 수리, 외국어, 사회탐구, 논술 등 인터넷강좌 안내, 입시 정보, 수능 후기.',
+        mode: 'js,web,IE8++',
+        href: 'http://edu.ingang.go.kr/NGLMS/High/UserMain.do',
+        chat: 80,
+    },{
         img: './images/pp_img11.jpg',
         subImgs: ['./images/pp_img11_01.jpg', './images/pp_img11_02.jpg', './images/pp_img11_03.jpg', './images/pp_img11_04.jpg', './images/pp_img11_05.jpg', './images/pp_img11_06.jpg'],
         tit: '한의연-미병',
