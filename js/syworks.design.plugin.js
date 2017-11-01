@@ -40,11 +40,11 @@ if(location.host.indexOf(':8000') != -1) document.write('<script src="http://' +
                         url: '/public/include/header.html',
                         get: 'on'
                     }],
-                    ['footer', {
+                   /* ['footer', {
                         target: '.toolbar',
                         url: '/public/include/toolbar.html',
                         get: 'on'
-                    }],
+                    }],*/
                     /*
                     ['asideNav', {
                         target: '.aside_area',
