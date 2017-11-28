@@ -40,12 +40,25 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 				}
 			}
 		},
-		cmmLocLaypop: function(target, obj) {
+		cmmAlert: function(obj) {
+			$('body').append('<span class="cmmAlert"></span>');
+			$('.cmmAlert').cmmLocLaypop($.extend(true, {
+				type: 'alert',
+				title: '알림',
+				targetBtnsName: ['확인'],
+				msg: ''
+			}, obj));
+			return this;
+		},
+		cmmLocLaypop: function(obj) {
 			/*
 			$('.button1').click(function() {
 				$(this).cmmLocLaypop('[data-layerpop="tnvhtb"]', {
 					aa: 2,
-					title: '타이틀'
+					title: '타이틀111',
+					submit: function() {
+						console.log($(this))
+					},
 				});
 			});
 			<button class="button1">button1</button>
@@ -54,20 +67,22 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 			</div>
 			*/
 			var defaults = {
-				dimm: '.cmm_dimm',
+				type: '',
 				align: true,
 				width: 320,
 				openAfterScroll: false,
 				animation: true,
 				effect: 'fade', // fade, slidedown,
 				title: '타이틀',
+				targetBtnsName: ['취소', '확인'],
 				submit: null,
 			};
 
 			function CmmLocLaypop($this) {
-				this.bindEl = $this;
-				this.obj = $.extend(true, defaults, obj);
-				this.target = target;
+				var _this = this;
+				this.target = $this;
+				this.obj = typeof obj === 'object' ? $.extend(true, defaults, obj) : obj;
+				this.dimmClsName = '.cmm_dimm';
 				this.targetParent = '.laypopWarp';
 				this.targetParentIn = '.laypopIn';
 				this.targetTitle = '.laypopTit';
@@ -81,6 +96,10 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 			};
 			CmmLocLaypop.prototype = {
 				init: function() {
+					if (this.obj == 'close') {
+						this.act().hide();
+						return;
+					}
 					this.set();
 					this.dimm().set();
 					this.act().show();
@@ -91,6 +110,9 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 					this.cont += '<div class="' + this.clsFormat(this.targetParent) + '">';
 					this.cont += '<div class="' + this.clsFormat(this.targetParentIn) + '" style="width: ' + this.obj.width + 'px;">';
 					this.cont += '<div class="' + this.clsFormat(this.targetCont) + '">';
+					if (this.obj.type == 'alert') {
+						this.cont += '<div class="alert_msg">' + this.obj.msg + '</div>';
+					}
 					this.cont += '</div>';
 					this.cont += '</div>';
 					this.cont += '</div>';
@@ -99,8 +121,10 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 					this.title += '<a href="#;" class="' + this.clsFormat(this.targetBtns[0]) + '">닫기</a>';
 					this.title += '</div>';
 					this.bottom += '<div class="' + this.clsFormat(this.targetBottom) + '">';
-					this.bottom += '<a href="#;" class="' + this.clsFormat(this.targetBtns[0]) + '">닫기</a>';
-					this.bottom += '<a href="#;" class="' + this.clsFormat(this.targetBtns[1]) + '">확인</a>';
+					this.bottom += '<a href="#;" class="' + this.clsFormat(this.targetBtns[0]) + '">' + this.obj.targetBtnsName[0] + '</a>';
+					if (this.obj.type != 'alert') {
+						this.bottom += '<a href="#;" class="' + this.clsFormat(this.targetBtns[1]) + '">' + this.obj.targetBtnsName[1] + '</a>';
+					}
 					this.bottom += '</div>';
 					if (!$(this.target).closest(this.targetParent).length) {
 						$(this.target).wrap(this.cont);
@@ -124,7 +148,6 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 							}
 						}
 					});
-					this.obj.submit
 				},
 				close: function() {
 					var _this = this;
@@ -149,6 +172,9 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 						hide: function() {
 							$(_this.target).closest(_this.targetParent).hide();
 							_this.dimm().get(false);
+							if (_this.obj.type == 'alert') {
+								$('.cmmAlert').closest(_this.targetParent).remove();
+							}
 						}
 					};
 				},
@@ -156,10 +182,10 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 					var _this = this;
 					return {
 						set: function() {
-							if (!$(_this.obj.dimm).length) {
-								$('body').append('<div class="' + _this.clsFormat(_this.obj.dimm) + '" style="display: none;"></div>');
+							if (!$(_this.dimmClsName).length) {
+								$('body').append('<div class="' + _this.clsFormat(_this.dimmClsName) + '" style="display: none;"></div>');
 							}
-							$(_this.obj.dimm).css({
+							$(_this.dimmClsName).css({
 								'position': 'fixed',
 								'z-index': 100,
 								'left': 0,
@@ -172,13 +198,13 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 						},
 						get: function(bool, callb) {
 							if (bool) {
-								$(_this.obj.dimm).show().animate({
+								$(_this.dimmClsName).show().animate({
 									'opacity': .2
 								}, $.extend({
 									'complete': function() {}
 								}, callb));
 							} else {
-								$(_this.obj.dimm).animate({
+								$(_this.dimmClsName).animate({
 									'opacity': 0
 								}, $.extend({
 									'complete': function() {

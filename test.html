@@ -31,15 +31,24 @@
 	<script>
 	$(document).ready(function() {
 		$('.button1').click(function() {
-			$(this).cmmLocLaypop('[data-layerpop="tnvhtb"]', {
-				aa: 2,
-				title: '타이틀111',
+			$('[data-layerpop="tnvhtb"]').cmmLocLaypop({
+				title: '타이틀112311',
+				targetBtnsName: ['취소', '확인'],
 				submit: function() {
-					console.log($(this))
+					$('[data-layerpop="tnvhtb"]').cmmLocLaypop('close');
+					$(this).cmmAlert({
+						title: '경123123고창',
+						msg: 'asdfasdfas123123123123123dfasdf'
+					});
 				},
 			});
 		});
-
+		$('.button2').click(function() {
+			$(this).cmmAlert({
+				title: '경고창',
+				msg: 'asdfasdfasdfasdf'
+			});
+		});
 	});
 	</script>
 	<button class="button1">button1</button>
@@ -48,7 +57,7 @@
 		<div class="tnvhtb">컨텐츠 요소입니다1</div>
 	</div>
 	<div class="cmm_layerpop" data-layerpop="bhfcvb">
-		<div class="bhfcvb">컨텐츠 요소입니다2</div>
+		<div class="bhfcvb">컨텐츠 요소입니다22222222222222222222</div>
 	</div>
 </body>
 
