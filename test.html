@@ -27,26 +27,26 @@
                 <![endif]-->
 </head>
 
-<body>
+<body style="height: 3000px;">
 	<script>
 	$(document).ready(function() {
 		$('.button1').click(function() {
 			$('[data-layerpop="tnvhtb"]').cmmLocLaypop({
 				title: '타이틀112311',
-				targetBtnsName: ['취소', '확인'],
-				submit: function() {
-					$('[data-layerpop="tnvhtb"]').cmmLocLaypop('close');
+				targetBtnsName: ['aaaa', '확인'],
+				submit: function($this) {
+					$this.cmmLocLaypop('close');
 					$(this).cmmAlert({
-						title: '경123123고창',
-						msg: 'asdfasdfas123123123123123dfasdf'
+						title: 'asdf',
+						msg : 'asfasdfasdfasdfasfasdfasdf'
 					});
 				},
 			});
 		});
 		$('.button2').click(function() {
-			$(this).cmmAlert({
-				title: '경고창',
-				msg: 'asdfasdfasdfasdf'
+			$('[data-layerpop="bhfcvb"]').cmmLocLaypop({
+				title: '타이틀112311',
+				targetBtnsName: ['aaa1111a', '확인'],
 			});
 		});
 	});
