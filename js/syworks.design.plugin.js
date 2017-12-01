@@ -48,23 +48,23 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 				targetBtnsName: ['확인'],
 				msg: ''
 			}, obj));
-			return this;
 		},
 		cmmLocLaypop: function(obj) {
 			/*
 			$('.button1').click(function() {
-				$(this).cmmLocLaypop('[data-layerpop="tnvhtb"]', {
-					aa: 2,
-					title: '타이틀111',
-					submit: function() {
-						console.log($(this))
+				$('[data-layerpop="tnvhtb"]').cmmLocLaypop({
+					title: '타이틀112311',
+					width: 640,
+					targetBtnsName: ['aaaa', '확인'],
+					submit: function($this) {
+						$this.cmmLocLaypop('close');
+						$(this).cmmAlert({
+							title: 'asdf',
+							msg: 'asfasdfasdfasdfasfasdfasdf'
+						});
 					},
 				});
-			});
-			<button class="button1">button1</button>
-			<div class="cmm_layerpop" data-layerpop="tnvhtb">
-				<div class="tnvhtb">컨텐츠 요소입니다1</div>
-			</div>
+			}).click();
 			*/
 			var defaults = {
 				type: '',
