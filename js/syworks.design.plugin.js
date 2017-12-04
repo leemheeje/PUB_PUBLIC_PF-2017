@@ -140,6 +140,15 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 					}
 					$(this.target).show();
 					$(this.target).closest(this.targetParent).hide();
+					this.alignFun();
+				},
+				alignFun: function() {
+					var sc = {
+						val: $(document).scrollTop(),
+					};
+					$(this.target).closest(this.targetParent).css({
+						'top': sc.val + 50,
+					});
 				},
 				submit: function() {
 					var _this = this;
@@ -199,7 +208,7 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 					var _this = this;
 					return {
 						set: function() {
-							$('body').append('<div class="' + _this.clsFormat(_this.dimmClsName) + '" style="display: none;"></div>');
+							$(_this.target).closest(_this.targetParent).append('<div class="' + _this.clsFormat(_this.dimmClsName) + '" style="display: none;"></div>');
 							$(_this.dimmClsName).css({
 								'position': 'fixed',
 								'z-index': 100,
@@ -213,13 +222,13 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 						},
 						get: function(bool, callb) {
 							if (bool) {
-								$(_this.dimmClsName).show().animate({
+								$(_this.target).closest(_this.targetParent).find(_this.dimmClsName).show().animate({
 									'opacity': .2
 								}, $.extend({
 									'complete': function() {}
 								}, callb));
 							} else {
-								$(_this.dimmClsName).animate({
+								$(_this.target).closest(_this.targetParent).find(_this.dimmClsName).animate({
 									'opacity': 0
 								}, $.extend({
 									'complete': function() {
@@ -1503,7 +1512,7 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 						$thisBtn.css('top', $thisScr);
 					});
 					$thisBtn.mousedown(function() {
-						$(window).scrollTop(0);
+						//$(window).scrollTop(0);
 					});
 					if (this.drag) {
 						$thisBtn.draggable({
@@ -1517,6 +1526,7 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 							},
 						});
 					}
+
 				},
 				drag: function() {
 					var _this = this;
