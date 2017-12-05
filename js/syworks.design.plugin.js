@@ -1,6 +1,8 @@
 if (location.host.indexOf('localhost') != -1) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>');
 /*
- * 제작자 : 싸이웍스 - 임희재프로 버전 : v.06 수정내용 : cmmLocLaypop 추가
+ * 제작자 : 싸이웍스 - 임희재프로 
+ * 버전 : v.06 
+ * 수정내용 : cmmLocLaypop 추가 / customScrollBar 수정
  */
 /* Plugin */
 ;
@@ -11,7 +13,7 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 				var include = [
 					['header', {
 						target: '.header',
-						url: location.host.indexOf('github') != -1 ? '/public/include/header.html':'/include/header.html',
+						url: location.host.indexOf('github') != -1 ? '/public/include/header.html' : '/include/header.html',
 						get: 'on'
 					}],
 					/*
@@ -297,7 +299,7 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 				var amp = amp ? amp : '&';
 				var result = null;
 				var arryDp = arry[1].split(amp);
-				for(var i = 0; i<arryDp.length; i++){
+				for (var i = 0; i < arryDp.length; i++) {
 					var resArry = arryDp[i].split('=');
 					for (var j = 0; j < resArry.length; j++) {
 						if (resArry[0] == param) {
