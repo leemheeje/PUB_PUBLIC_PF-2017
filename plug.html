@@ -1,74 +1,78 @@
 <!doctype html>
 <html lang="ko">
 
-    <head>
-        <meta charset="UTF-8">
-		<meta name="theme-color" content="#3F51B5">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        <title>입사지원자-임희재</title>
-        <link rel="shortcut icon" type="image/x-icon" href="./images/ico.ico" />
-        <link rel="stylesheet" type="text/css" href="./css/style.css" />
-        <script src="./js/jquery-1.9.1.min.js"></script>
-        <script src="./js/jquery.cookie.js"></script>
-        <script src="./js/jquery.easing.1.3.js"></script>
-        <script src="./js/jquery.transform.js"></script>
-        <script src="./js/syworks.design.customTags.js"></script>
-        <script src="./js/syworks.design.plugin.js"></script>
-        <script type="text/javascript">
-        $(document).ready(function() {
-            $(this).include(true);
-            $(this).customTags();
-        });
-        </script>
-        <!--[if lt IE 9]>
+<head>
+	<meta charset="UTF-8">
+	<meta name="theme-color" content="#3F51B5">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>입사지원자-임희재</title>
+	<link rel="shortcut icon" type="image/x-icon" href="./images/ico.ico" />
+	<link rel="stylesheet" type="text/css" href="./css/style.css" />
+	<script src="./js/jquery-1.9.1.min.js"></script>
+	<script src="./js/jquery-ui-1.9.2.custom.min.js"></script>
+	<script src="./js/jquery.cookie.js"></script>
+	<script src="./js/jquery.easing.1.3.js"></script>
+	<script src="./js/jquery.transform.js"></script>
+	<script src="./js/syworks.design.customTags.js"></script>
+	<script src="./js/syworks.design.plugin.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$(this).include(true);
+		$(this).customTags();
+	});
+	</script>
+	<!--[if lt IE 9]>
             <script type='text/javascript' src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
             <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
             <script src="http://jamesallardice.github.io/Placeholders.js/assets/js/placeholders.min.js"></script>
         <![endif]-->
-    </head>
+</head>
 
-    <body class="sub">
-        <div class="wrap">
-            <div class="toolbar">
-                <!-- 툴바영역입니다. -->
-            </div>
-            <div class="header">
-                <!-- 헤더영역입니다. -->
-            </div>
-            <div class="container">
-                <script type="text/javascript" src="./js/mainGridHtmlPars.js"></script>
-                <script type="text/javascript">
-                $(document).ready(function() {
-                  $('.cen_box .cmm_tit').each(function(){
-                    var $txt = $(this).html();
-                    $('.plugLst').append('<li><a href="#">'+$txt+'</a></li>');
-                  });
-                  $('.plugLst li a').click(function(){
-                        var $idx = $(this).closest('li').index();
-                        var $top = $('.cen_box .bx_in:eq('+$idx+')').offset().top;
-                        $('html,body').stop().animate({
-                          'scrollTop' : $top
-                        }, {
-                          duration:1000,
-                          easing:'easeInExpo'
-                        });
-                        return false;
-                  });
-                });
-                </script>
-                <div class="contents">
-                    <div class="cont_in plug">
-                        <div class="cen_box">
-                            <div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">커스텀태그호출</div>
-                                    <ul class="cmm_txtlst">
-                                      <li><b class="c_blc">this를 타고, 해당this의 자식요소를</b> 찾아 실행되는 함수입니다.</li>
-                                      <li>동적으로 생성되야하는 마크업을 추가|수정 작업시 사용됩니다.</li>
-                                      <li>this를 기반으로 호출되는 함수이므로, <b class="c_blc">비동기호출시, 페이지로드시 호출</b>됩니다.</li>
-                                    </ul>
-                                    <div class="pre">
-                                        <pre>
+<body class="sub">
+	<div class="wrap">
+		<div class="toolbar">
+			<!-- 툴바영역입니다. -->
+		</div>
+		<div class="header">
+			<!-- 헤더영역입니다. -->
+		</div>
+		<div class="container">
+			<script type="text/javascript" src="./js/mainGridHtmlPars.js"></script>
+			<script type="text/javascript">
+			$(document).ready(function() {
+				$('.cen_box .cmm_tit').each(function() {
+					var $txt = $(this).html();
+					$('.plugLst').append('<li><a href="#">' + $txt + '</a></li>');
+				});
+				$('.plugLst li a').click(function() {
+					var $idx = $(this).closest('li').index();
+					var $top = $('.cen_box .bx_in:eq(' + $idx + ')').offset().top;
+					$('html,body').stop().animate({
+						'scrollTop': $top
+					}, {
+						duration: 1000,
+						easing: 'easeInExpo'
+					});
+					return false;
+				});
+				$('.pre').each(function(){
+					$(this).customScrollBar();
+				});
+			});
+			</script>
+			<div class="contents">
+				<div class="cont_in plug">
+					<div class="cen_box">
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">커스텀태그호출</div>
+								<ul class="cmm_txtlst">
+									<li><b class="c_blc">this를 타고, 해당this의 자식요소를</b> 찾아 실행되는 함수입니다.</li>
+									<li>동적으로 생성되야하는 마크업을 추가|수정 작업시 사용됩니다.</li>
+									<li>this를 기반으로 호출되는 함수이므로, <b class="c_blc">비동기호출시, 페이지로드시 호출</b>됩니다.</li>
+								</ul>
+								<div class="pre">
+									<pre>
           'customTags': function () {
               var $this = $(this);
               .....
@@ -77,18 +81,18 @@
               return $this;
           },
                                         </pre>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">JS방식의 인크루드</div>
-                                    <ul class="cmm_txtlst">
-                                      <li>퍼블리셔 개인의 <b class="c_blc">작업편의를 위한 인크루드</b>방식입니다.</li>
-                                      <li>실질적인 적용시엔 <b class="c_blc">해당개발언어에 맞는 인크루드 필요.</b></li>
-                                    </ul>
-                                    <div class="pre">
-                                        <pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">JS방식의 인크루드</div>
+								<ul class="cmm_txtlst">
+									<li>퍼블리셔 개인의 <b class="c_blc">작업편의를 위한 인크루드</b>방식입니다.</li>
+									<li>실질적인 적용시엔 <b class="c_blc">해당개발언어에 맞는 인크루드 필요.</b></li>
+								</ul>
+								<div class="pre">
+									<pre>
         include: function (bool) {
             if (bool) {
                 var include = [
@@ -131,18 +135,18 @@
             }
         },
                                         </pre>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">파라미터값 받아오기</div>
-                                    <ul class="cmm_txtlst">
-                                      <li>퍼블리셔 영역에서 실질적으로 파라미터값을 조정하는 경우는 드물지만, <b class="c_blc">개발영역에서 던져주는 파라미터값을 받아 작업</b>을 해야할때가 있습니다. 그럴때 사용하여, <b class="c_blc">customTags() 등등 2차가공</b>에 사용됩니다.</li>
-                                      <li>해당함수의 매개변수로 파라미터네임을 선언한 뒤 네임에 맞는 값을 출력합니다.</li>
-                                    </ul>
-                                    <div class="pre">
-                                        <pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">파라미터값 받아오기</div>
+								<ul class="cmm_txtlst">
+									<li>퍼블리셔 영역에서 실질적으로 파라미터값을 조정하는 경우는 드물지만, <b class="c_blc">개발영역에서 던져주는 파라미터값을 받아 작업</b>을 해야할때가 있습니다. 그럴때 사용하여, <b class="c_blc">customTags() 등등 2차가공</b>에 사용됩니다.</li>
+									<li>해당함수의 매개변수로 파라미터네임을 선언한 뒤 네임에 맞는 값을 출력합니다.</li>
+								</ul>
+								<div class="pre">
+									<pre>
         getParams: function (param, str) {
             var url = location.search;
             var arry = url.split(str ? str : '?');
@@ -156,18 +160,21 @@
             return result;
         },
                                         </pre>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">맵API<span class="sm"><b class="">DAUM_MAP</b>기반</span></div>
-                                    <ul class="cmm_txtlst">
-                                      <li><b class="c_blc">DAUMMAP_API기반의 2차가공</b> 되는 JS구분입니다.</li>
-                                      <li><b class="c_blc">data-params 혹은 해당함수의 옵션</b>으로 위성좌표값 지정.<br/> 맵의 마커이미지, 좌표레벨 등등 <b class="c_blc">커스터마이징 할수있도록 가공</b>됩니다.</li>
-                                    </ul>
-                                    <div class="pre">
-                                        <pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">맵API
+									<span class="sm"><b class="">DAUM_MAP</b>기반</span>
+								</div>
+								<ul class="cmm_txtlst">
+									<li><b class="c_blc">DAUMMAP_API기반의 2차가공</b> 되는 JS구분입니다.</li>
+									<li><b class="c_blc">data-params 혹은 해당함수의 옵션</b>으로 위성좌표값 지정.
+										<br/> 맵의 마커이미지, 좌표레벨 등등 <b class="c_blc">커스터마이징 할수있도록 가공</b>됩니다.</li>
+								</ul>
+								<div class="pre">
+									<pre>
        mapApiSortFun: function (obj) {
             var defaults = {
                 LatReturn: null,
@@ -232,17 +239,17 @@
             return this;
         },
                                         </pre>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">숫자타이핑이벤트</div>
-                                    <ul class="cmm_txtlst">
-                                      <li>숫자에 타이핑되는 효과를 주는 이벤트입니다.</li>
-                                    </ul>
-                                    <div class="pre">
-                                        <pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">숫자타이핑이벤트</div>
+								<ul class="cmm_txtlst">
+									<li>숫자에 타이핑되는 효과를 주는 이벤트입니다.</li>
+								</ul>
+								<div class="pre">
+									<pre>
        numberEffect: function (obj) {
             var defaults = {
                 mode: 'typing',
@@ -288,18 +295,20 @@
             return this;
         },
                                         </pre>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">가변 그리드시스템<span class="sm">현 메인에 사용</span></div>
-                                    <ul class="cmm_txtlst">
-                                      <li>가변그리드시스템을 생각하여 제작된 JS입니다.</li>
-                                      <li><b class="c_blc">smartresize()를 통하여 리사이즈</b>가 될때마다, <b class="c_blc">마크업을 재형성</b>하는 식으로 그려집니다.</li>
-                                    </ul>
-                                    <div class="pre">
-                                        <pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">가변 그리드시스템
+									<span class="sm">현 메인에 사용</span>
+								</div>
+								<ul class="cmm_txtlst">
+									<li>가변그리드시스템을 생각하여 제작된 JS입니다.</li>
+									<li><b class="c_blc">smartresize()를 통하여 리사이즈</b>가 될때마다, <b class="c_blc">마크업을 재형성</b>하는 식으로 그려집니다.</li>
+								</ul>
+								<div class="pre">
+									<pre>
        rspGrid: function (obj) {
             var _settings = {
                 setBox: {
@@ -430,18 +439,21 @@
             return this;
         },
                                         </pre>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">Swipe<span class="sm"><b>SlickJS 기반</b>의 2차가공 JS</span></div>
-                                    <ul class="cmm_txtlst">
-                                      <li>slick.js 기반의 플러그인(<a href="http://kenwheeler.github.io/slick/" target="_blank" title="새창" class="c_blu">http://kenwheeler.github.io/slick/</a>) slick 옵션+커스텀옵션 추가</li>
-                                      <li>기본 slick.js 옵션을 사용하여, <b class="c_blc">프로젝트에 맞게 2차가공(커스텀옵션)</b> 됩니다.</li>
-                                    </ul>
-                                    <div class="pre">
-                                        <pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">Swipe
+									<span class="sm"><b>SlickJS 기반</b>의 2차가공 JS</span>
+								</div>
+								<ul class="cmm_txtlst">
+									<li>slick.js 기반의 플러그인(
+										<a href="http://kenwheeler.github.io/slick/" target="_blank" title="새창" class="c_blu">http://kenwheeler.github.io/slick/</a>) slick 옵션+커스텀옵션 추가</li>
+									<li>기본 slick.js 옵션을 사용하여, <b class="c_blc">프로젝트에 맞게 2차가공(커스텀옵션)</b> 됩니다.</li>
+								</ul>
+								<div class="pre">
+									<pre>
       uiSwiper: function (obj) {
             var $this = $(this);
             var defaults = {
@@ -623,18 +635,20 @@
             return $this;
         },
                                         </pre>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">HTML5+CSS3 마우스무브효과<span class="sm">Type.01</span></div>
-                                    <ul class="cmm_txtlst">
-                                      <li>mosemove이벤트로 pageX로 컨트롤합니다.</li>
-                                      <li>옵션에 따라 방향전환 및 속도를 할 수 있게 제작되었습니다.</li>
-                                    </ul>
-                                    <div class="pre">
-                                        <pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">HTML5+CSS3 마우스무브효과
+									<span class="sm">Type.01</span>
+								</div>
+								<ul class="cmm_txtlst">
+									<li>mosemove이벤트로 pageX로 컨트롤합니다.</li>
+									<li>옵션에 따라 방향전환 및 속도를 할 수 있게 제작되었습니다.</li>
+								</ul>
+								<div class="pre">
+									<pre>
      musMoveEffect: function (obj) {
             var $this = $(this);
             var opt = $.extend(true, {
@@ -800,18 +814,20 @@
             return $this;
         },
                                         </pre>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">HTML5+CSS3 마우스무브효과<span class="sm">Type.02</span></div>
-                                    <ul class="cmm_txtlst">
-                                      <li>mosemove이벤트로 pageX로 컨트롤합니다.</li>
-                                      <li>옵션에 따라 방향전환 및 속도를 할 수 있게 제작되었습니다.</li>
-                                    </ul>
-                                    <div class="pre">
-                                        <pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">HTML5+CSS3 마우스무브효과
+									<span class="sm">Type.02</span>
+								</div>
+								<ul class="cmm_txtlst">
+									<li>mosemove이벤트로 pageX로 컨트롤합니다.</li>
+									<li>옵션에 따라 방향전환 및 속도를 할 수 있게 제작되었습니다.</li>
+								</ul>
+								<div class="pre">
+									<pre>
      musMoveDragPraxx: function (obj) {
             // $('.list li').each(function () {
             //     var $this = $(this);
@@ -914,16 +930,17 @@
             return this;
         },
                                         </pre>
-                                    </div>
-                                </div>
-                            </div><div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">모바일 swipe리스트페이지</div>
-                                    <ul class="cmm_txtlst">
-                                      <li>ios 카카오톡 버전처럼 리스트페이지의 touchmove시 해당리스트 swipe 실행</li>
-                                    </ul>
-                                    <div class="pre">
-                                        <pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">모바일 swipe리스트페이지</div>
+								<ul class="cmm_txtlst">
+									<li>ios 카카오톡 버전처럼 리스트페이지의 touchmove시 해당리스트 swipe 실행</li>
+								</ul>
+								<div class="pre">
+									<pre>
      swipListBtns: function (obj) {
             var defaults = {
                 minDistance: 20,
@@ -1006,27 +1023,27 @@
             return this;
         },
                                         </pre>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rig_box fixedAsideBox">
-                            <div class="bx_in">
-                                <div class="abu_lf">
-                                    <div class="cmm_tit">플러그인
-                                        <span class="sm">
-                                            <b>자체제작</b> 플러그인
-                                        </span>
-                                    </div>
-                                    <ul class="plug_lst plugLst">
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="rig_box fixedAsideBox">
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">플러그인
+									<span class="sm">
+										<b>자체제작</b> 플러그인
+									</span>
+								</div>
+								<ul class="plug_lst plugLst">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 
 </html>

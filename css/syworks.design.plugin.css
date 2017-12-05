@@ -4,7 +4,7 @@
 .cmm_layerpop{display: none;}
 .laypopWarp *{box-sizing: border-box;}
 .laypopWarp{position: absolute; left: 0; top: 50px; width: 100%; text-align: center; z-index: 101;}
-.laypopWarp .laypopIn{background: #fff; border-radius: 5px; box-shadow: 0 20px 30px rgba(0,0,0,0.2); display: inline-block; min-width: 320px; text-align: left;}
+.laypopWarp .laypopIn{background: #fff; border-radius: 5px; box-shadow: 0 20px 30px rgba(0,0,0,0.2); display: inline-block; min-width: 320px; text-align: left; position: relative; z-index: 101;}
 .laypopWarp .laypopIn .laypopTit,
 .laypopWarp .laypopIn .laypopBottom,
 .laypopWarp .laypopIn .laypopCont{padding: 15px 20px;}
@@ -16,6 +16,11 @@
 .laypopWarp .laypopIn .laypopBottom .layClosebtn{background: #eee; color: #222;}
 .laypopWarp .laypopIn .laypopBottom .laySmtbtn{background: #222; color: #fff;}
 .laypopWarp .laypopIn .laypopCont{padding-top: 20px; padding-bottom: 20px;}
+
+/* 스크롤*/
+.scr_wrap{position: relative;}
+.scr_wrap .scr_bar{height: 100%; background: none; border-radius: 10px; width: 3px; position: absolute; right: 0; top: 0;}
+.scr_wrap .scr_bar .scr_btn{width: 100%; background: #ddd; display: inline-block; border-radius: 20px; cursor: pointer;}
 
 
 

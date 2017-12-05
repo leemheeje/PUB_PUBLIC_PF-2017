@@ -11,7 +11,7 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 				var include = [
 					['header', {
 						target: '.header',
-						url: '/public/include/header.html',
+						url: location.host.indexOf('github') != -1 ? '/public/include/header.html':'/include/header.html',
 						get: 'on'
 					}],
 					/*
@@ -51,21 +51,8 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 		},
 		cmmLocLaypop: function(obj) {
 			/*
-			$('.button1').click(function() {
-				$('[data-layerpop="tnvhtb"]').cmmLocLaypop({
-					title: '타이틀112311',
-					width: 640,
-					targetBtnsName: ['aaaa', '확인'],
-					submit: function($this) {
-						$this.cmmLocLaypop('close');
-						$(this).cmmAlert({
-							title: 'asdf',
-							msg: 'asfasdfasdfasdfasfasdfasdf'
-						});
-					},
-				});
-			}).click();
-			*/
+			 * $('.button1').click(function() { $('[data-layerpop="tnvhtb"]').cmmLocLaypop({ title: '타이틀112311', width: 640, targetBtnsName: ['aaaa', '확인'], submit: function($this) { $this.cmmLocLaypop('close'); $(this).cmmAlert({ title: 'asdf', msg: 'asfasdfasdfasdfasfasdfasdf' }); }, }); }).click(); html : <div class="cmm_layerpop" data-layerpop="tnvhtb">내용</div>
+			 */
 			var defaults = {
 				type: '',
 				align: true,
@@ -310,14 +297,14 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 				var amp = amp ? amp : '&';
 				var result = null;
 				var arryDp = arry[1].split(amp);
-				arryDp.forEach(function(loc) {
-					var resArry = loc.split('=');
-					for (var i = 0; i < resArry.length; i++) {
+				for(var i = 0; i<arryDp.length; i++){
+					var resArry = arryDp[i].split('=');
+					for (var j = 0; j < resArry.length; j++) {
 						if (resArry[0] == param) {
 							result = resArry[1];
 						}
 					}
-				});
+				}
 				return result;
 			}
 		},
@@ -1512,7 +1499,7 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 						$thisBtn.css('top', $thisScr);
 					});
 					$thisBtn.mousedown(function() {
-						//$(window).scrollTop(0);
+						// $(window).scrollTop(0);
 					});
 					if (this.drag) {
 						$thisBtn.draggable({
@@ -1526,7 +1513,6 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 							},
 						});
 					}
-
 				},
 				drag: function() {
 					var _this = this;
