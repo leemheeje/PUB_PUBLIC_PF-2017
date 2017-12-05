@@ -1,7 +1,6 @@
 @import url("./base.css");
 @import url("./ulRespon.css");
 @import url("./themify-icons.css");
-body{background: url(../images/Untitled-2.png) no-repeat center center;}
 img{max-width: 100%; vertical-align: top; -webkit-touch-callout: none; -webkit-user-select: none;}
 *{-webkit-tap-highlight-color: transparent;}
 .c_blc{color: #000;}
