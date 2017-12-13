@@ -59,7 +59,7 @@ img{max-width: 100%; vertical-align: top; -webkit-touch-callout: none; -webkit-u
 .pp_grid .item{ perspective: 500px;}
 .pp_grid .item .ppgr_inner{display: block; padding: 30px; background: #fff; border-radius: 5px; box-shadow: 0 1px 1px #ccc; position: relative; }
 .pp_grid .item .ppgr_inner .ppgr_img{display: block; }
-.pp_grid .item .ppgr_inner .ppgr_img img{max-width: 100%; }
+.pp_grid .item .ppgr_inner .ppgr_img img{max-width: 100%;}
 .pp_grid .item .ppgr_inner .ppgr_txts{clear: both; display: block;}
 .pp_grid .item .ppgr_inner .ppgr_txts .ppgr_tit{font-size: 13px; color: #000; font-weight: 600; padding: 8px 0; display: block;}
 .pp_grid .item .ppgr_inner .ppgr_txts .ppgr_subj{font-size: 12px; line-height: 1.5; color: #555;}
