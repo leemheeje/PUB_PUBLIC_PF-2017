@@ -20,7 +20,8 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 					 * ['footer', { target: '.toolbar', url: '/public/include/toolbar.html', get: 'on' }],
 					 */
 					/*
-					 * ['asideNav', { target: '.aside_area', url: '/include/asideNav.html', get: 'on' }], ['toolbar', { target: '.toolbar', url: '/include/toolbar.html', get: 'on' }]
+					 * ['asideNav', { target: '.aside_area', url: '/include/asideNav.html', get: 'on' }], 
+					 *['toolbar', { target: '.toolbar', url: '/include/toolbar.html', get: 'on' }]
 					 */
 				];
 				var appendHtml = function(target) {
@@ -48,12 +49,16 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 				type: 'alert',
 				title: '알림',
 				targetBtnsName: ['확인'],
-				msg: ''
+				msg: '',
+				submit: function($el) {
+					$el.remove();
+				},
 			}, obj));
 		},
 		cmmLocLaypop: function(obj) {
 			/*
-			 * $('.button1').click(function() { $('[data-layerpop="tnvhtb"]').cmmLocLaypop({ title: '타이틀112311', width: 640, targetBtnsName: ['aaaa', '확인'], submit: function($this) { $this.cmmLocLaypop('close'); $(this).cmmAlert({ title: 'asdf', msg: 'asfasdfasdfasdfasfasdfasdf' }); }, }); }).click(); html : <div class="cmm_layerpop" data-layerpop="tnvhtb">내용</div>
+			 * $('.button1').click(function() { 
+			 	$('[data-layerpop="tnvhtb"]').cmmLocLaypop({ title: '타이틀112311', width: 640, targetBtnsName: ['aaaa', '확인'], submit: function($this) { $this.cmmLocLaypop('close'); $(this).cmmAlert({ title: 'asdf', msg: 'asfasdfasdfasdfasfasdfasdf' }); }, }); }).click(); html : <div class="cmm_layerpop" data-layerpop="tnvhtb">내용</div>
 			 */
 			var defaults = {
 				type: '',
@@ -93,7 +98,7 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 					this.dimm().set();
 					this.act().show();
 					this.close();
-					this.submit();
+					this.submitFun();
 				},
 				set: function() {
 					this.cont += '<div class="' + this.clsFormat(this.targetParent) + '">';
@@ -139,9 +144,9 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 						'top': sc.val + 50,
 					});
 				},
-				submit: function() {
+				submitFun: function() {
 					var _this = this;
-					$(_this.target).closest(_this.targetParent).find(this.targetBtns[1]).on({
+					$(_this.target).closest(_this.targetParent).find(this.targetBtns[1]).off().on({
 						'click': function() {
 							if (typeof _this.obj.submit === 'function' && _this.obj.submit) {
 								_this.obj.submit($(this).closest(_this.targetParent));
