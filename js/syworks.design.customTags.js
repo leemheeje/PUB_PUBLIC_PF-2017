@@ -7,23 +7,47 @@ $.fn.extend({
 				$(this).find('li:last').addClass('last');
 			}
 		});
-		$this.find('input').each(function(){
+		$this.find('input').on('keydown', function(e) {
+			var $this = $(this);
+			var $data = $this.data('inputClass');
+			if ($data && typeof $data === 'object') {
+				for (var i in $data) {
+					switch (i) {
+						case 'ime':
+							var cls = null;
+							switch ($data[i]) {
+								case 'number':
+									cls = e.keyCode >= 65 && e.keyCode <= 90;
+									break;
+								case 'string':
+									cls = (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105);
+									break;
+							}
+							if (cls) {
+								return false;
+							}
+							break;
+					}
+				}
+			}
+		});
+		$this.find('input').each(function() {
 			var $data = $(this).data('input');
-			if($data && typeof $data === 'object'){
+			if ($data && typeof $data === 'object') {
 				console.log($data)
-				for(var i in $data){
+				for (var i in $data) {
 					switch (i) {
 						case 'number':
 							var num = 0;
 							var inv = 1;
 							$(this).wrap('<span class="dataInputNumber"></span>');
 							$(this).closest('.dataInputNumber').append('<span class="dataInputBtnGroup"><a href="#;" class="dataInputBtns up">위로</a><a href="#;" class="dataInputBtns down">아래로</a></span>');
-							$('.dataInputBtns').mousedown(function(){
+							$('.dataInputBtns').mousedown(function() {
 								var $input = $(this).closest('.dataInputNumber').find('input');
 								var $inputVal = $input.val();
-								if($(this).is('.up')){
+								if ($(this).is('.up')) {
 									inv = 1;
-								}else{
+								} else {
 									inv = -1;
 								}
 								num += inv;

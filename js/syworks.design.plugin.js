@@ -1,4 +1,4 @@
-if (location.host.indexOf('localhost') != -1) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>');
+if (location.host.indexOf('7999') != -1) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
 /*
  * 제작자 : 싸이웍스 - 임희재프로 
  * 버전 : v.06 
@@ -42,6 +42,103 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 					}
 				}
 			}
+		},
+		cmmValidator: function(obj) {
+			/*
+			$('.tntntntntn a').click(function(){
+			$('.tntntntntn').cmmValidator();
+		});
+<div class="tntntntntn">
+		<input type="checkbox" data-input-class='{"required" : true}' name=""><label>asdf</label>
+		<input type="text" data-input-class='{"ime" : "string", "required" : true}' title="전화번호">
+		<input type="text" data-input-class='{"ime" : "number", "required" : true}' title="문자">
+		<input type="text" data-input-class='{"ime" : "string", "required" : true}' title="ㄴㄴㄴㄴㄴ">
+		<input type="text" data-input-class='{"ime" : "string", "required" : true}' title="ㅊㅊㅊㅊ">
+		<select data-input-class='{"required" : true}'>
+			<option value="">asdfasdf</option>
+		</select>
+		<a href="#">asdfasdf</a>
+	</div>
+			*/
+			var defaults = {
+				errorCall: 'alert', //alert , append
+				errorStr: 'title',
+			};
+
+			function CmmValidator($this) {
+				this.el = $this;
+				this.obj = $.extend(true, defaults, obj);
+				this.input = null;
+				this.data = null;
+				this.title = '';
+				this.init();
+			};
+			CmmValidator.prototype = {
+				init: function() {
+					this.set();
+				},
+				set: function() {
+					var _this = this;
+					this.clear = false;
+					console.log(this.clear)
+					this.el.find('input, select').each(function() {
+						var $this = $(this);
+						var $data = $this.data('inputClass');
+						if ($data.required) {
+							_this.input = $this;
+							_this.chk();
+							if (_this.clear) {
+								return false;
+							}
+						}
+					});
+				},
+				chk: function() {
+					this.title = this.input.attr(this.obj.errorStr) ? this.input.attr(this.obj.errorStr) : '해당항목';
+					if (this.input.is('input[type="radio"]') || this.input.is('input[type="checkbox"]')) {
+						this.errorFun(this.input.prop('checked'), '을(를) 선택해주세요.');
+					} else {
+						this.errorFun(this.input.val(), '을(를) 입력해주세요.');
+					}
+				},
+				errorFun: function(bool, bmsg) {
+					if (!bool) {
+						switch (this.obj.errorCall) {
+							case 'alert':
+								alert('\'' + this.title + '\'' + bmsg);
+								break;
+						}
+						this.input.focus();
+						this.clear = true;
+					}
+				}
+			};
+			this.each(function() {
+				$.data($(this), new CmmValidator($(this), obj));
+			});
+			return this;
+		},
+		cmmVisualEffect: function(obj) {
+			var defaults = {
+
+			};
+
+			function CmmMycanavs($this) {
+				this.canvas = document.getElementById($this[0].id);
+				this.ctx = this.canvas.getContext('2d');
+				console.log(123123123123)
+			};
+			CmmMycanavs.prototype = {
+				init: function() {},
+				set: function() {},
+				update: function() {},
+				draw: function() {},
+				callb: function() {}
+			};
+			this.each(function() {
+				$.data($(this), new CmmMycanavs($(this), obj));
+			});
+			return this;
 		},
 		cmmAlert: function(obj) {
 			$('body').append('<span class="cmmAlert"></span>');
@@ -1030,7 +1127,7 @@ if (location.host.indexOf('localhost') != -1) document.write('<script src="http:
 						tue: '화',
 						wed: '수',
 						thu: '목',
-						fri: '굼',
+						fri: '금',
 						sat: '토'
 					},
 					month: [
