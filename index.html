@@ -34,33 +34,42 @@
 		</div>
 		<div class="header">
 			<!-- 헤더영역입니다. -->
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+<script src="./js/syworks.design.header.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+		gnb.init();;
+		(function($) {
+				var getMenuIdx = $(this).getParams('currentMenu');
+				$('.gnbMenu li:eq(' + getMenuIdx + ')').addClass('active');
+		})(jQuery);
+});
+</script>
+<div class="header_inner">
+		<div class="h_logo">
+				<a href="/public/" class="logo" title="로고"></a>
 		</div>
+		<div class="h_nav">
+				<ul class="clearfix gnbMenu">
+						<li class="nitems first">
+								<a href="./sub.html?pageNum=0?currentMenu=0">PORTFOLIO</a>
+						</li>
+						<li class="nitems">
+								<a href="./plug.html?currentMenu=1">자체제작 PLUGIN</a>
+						</li>
+						<li class="nitems last">
+								<a href="./abu.html?currentMenu=2">ABOUT</a>
+						</li>
+						<!-- <li class="nitems">
+								<a href="#?currentMenu=3">STUDY GROUP</a>
+						</li> -->
+				</ul>
+		</div>
+<a href="#" class="mob_btn mobBtn" title="메뉴열기"><span></span><span></span><span></span></a><div class="dimm"></div></div>
+</div>
 		<div class="container">
-			<script type="text/javascript" src="./js/mainGridHtmlPars.js"></script>
-			<script type="text/javascript">
-			$(document).ready(function() {
-				mainGridHtml.set({
-					maxlengh: 50
-				});
-				$('.ppGrid').rspGrid({
-					setBox: {
-						items: '.item',
-						width: 270,
-						margin: 10
-					},
-					animateOfOptions: {
-						mode: 'flip', // flip,opacity
-						duration: 500,
-						ease: 'easeOutExpo',
-					}
-				});
-				$('.count_up .cnum').each(function() {
-					$(this).numberEffect();
-				});
-			});
-			</script>
 			<div class="contents">
-				<div class="pp_grid ppGrid"></div>
+				<div class="pp_grid ppGrid clearfix"><div class="itemsGroup" itemgroup="0" style="width: 20%; float: left; box-sizing: border-box;"><div class="item" itemgroupbox="0" style="padding: 5px;"><a href="./sub.html?pageNum=0"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img22.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">한국과학창의재단-크레존</span><p class="ppgr_subj">창의체험활동, 창의체험 프로그램, 창의인성교육, 현장체험학습, 지속가능발전교육, 자유학기제...</p></div></div></a></div><div class="item" itemgroupbox="0" style="padding: 5px;"><a href="./sub.html?pageNum=5"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img17.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">인플러스간호학원</span><p class="ppgr_subj">이 어플리케이션은 일상 생활에서 사용자의 미병을 평가하고 관리방법을 제공하기 위한 한의학 ...</p></div></div></a></div><div class="item" itemgroupbox="0" style="padding: 5px;"><a href="./sub.html?pageNum=10"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img10.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">이화여대-포트폴리오-MOB</span><p class="ppgr_subj">이화여자대학교 공식 앱입니다. 학교 주요 정보 및 교내 구성원이 사용할 수 있는 다양한 서...</p></div></div></a></div><div class="item" itemgroupbox="0" style="padding: 5px;"><a href="./sub.html?pageNum=15"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img16.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">금융연수원-MYKBI</span><p class="ppgr_subj">한국 금융연수원 대표 웹사이트(PC/모바일), 용이한 학습컨텐츠 제공을 위한 시각화 및 금...</p></div></div></a></div><div class="item" itemgroupbox="0" style="padding: 5px;"><a href="./sub.html?pageNum=20"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">한라대학교-MOB</span><p class="ppgr_subj">한라대학교의 Brand Identity를 나타낼 수 있도록 밝고 생동감 있는 디자인 적용하...</p></div></div></a></div></div><div class="itemsGroup" itemgroup="1" style="width: 20%; float: left; box-sizing: border-box;"><div class="item" itemgroupbox="1" style="padding: 5px;"><a href="./sub.html?pageNum=1"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img21.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">강남구청-인터넷수능방송-MOB</span><p class="ppgr_subj">언어, 수리, 외국어, 사회탐구, 논술 등 인터넷강좌 안내, 입시 정보, 수능 후기.</p></div></div></a></div><div class="item" itemgroupbox="1" style="padding: 5px;"><a href="./sub.html?pageNum=6"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img14.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">MCARE_V1.0</span><p class="ppgr_subj">부산대병원 진료&amp;길찾기 앱은 부산대학교병원 내부를 어디든 쉽게 찾아갈 수 있는 길찾기 기능...</p></div></div></a></div><div class="item" itemgroupbox="1" style="padding: 5px;"><a href="./sub.html?pageNum=11"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img18.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">국토교통사이버안전센터</span><p class="ppgr_subj"></p></div></div></a></div><div class="item" itemgroupbox="1" style="padding: 5px;"><a href="./sub.html?pageNum=16"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img09.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">금융연수원-MOB</span><p class="ppgr_subj">한국 금융연수원 대표 웹사이트(PC/모바일), 용이한 학습컨텐츠 제공을 위한 시각화 및 금...</p></div></div></a></div><div class="item" itemgroupbox="1" style="padding: 5px;"><a href="./sub.html?pageNum=21"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img12.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">단국대학교-MOB</span><p class="ppgr_subj">단국대학교 공식 모바일 어플리케이션 본 단국대학교 앱은 정보화기획센터에서 학내 구성원을 대...</p></div></div></a></div></div><div class="itemsGroup" itemgroup="2" style="width: 20%; float: left; box-sizing: border-box;"><div class="item" itemgroupbox="2" style="padding: 5px;"><a href="./sub.html?pageNum=2"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img20.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">강남구청-인터넷수능방송-PC</span><p class="ppgr_subj">언어, 수리, 외국어, 사회탐구, 논술 등 인터넷강좌 안내, 입시 정보, 수능 후기.</p></div></div></a></div><div class="item" itemgroupbox="2" style="padding: 5px;"><a href="./sub.html?pageNum=7"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img02.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">MCARE_V2.0</span><p class="ppgr_subj">부산대병원 진료&amp;길찾기 앱은 부산대학교병원 내부를 어디든 쉽게 찾아갈 수 있는 길찾기 기능...</p></div></div></a></div><div class="item" itemgroupbox="2" style="padding: 5px;"><a href="./sub.html?pageNum=12"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img03.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">강남대학교</span><p class="ppgr_subj">밤과 낮 시간에 따라 배경이 변경되며 관리자 설정에 따라 비주얼 이미지를 동영상으로 변경하...</p></div></div></a></div><div class="item" itemgroupbox="2" style="padding: 5px;"><a href="./sub.html?pageNum=17"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img05.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">금융연수원-PC</span><p class="ppgr_subj">한국 금융연수원 대표 웹사이트(PC/모바일), 용이한 학습컨텐츠 제공을 위한 시각화 및 금...</p></div></div></a></div></div><div class="itemsGroup" itemgroup="3" style="width: 20%; float: left; box-sizing: border-box;"><div class="item" itemgroupbox="3" style="padding: 5px;"><a href="./sub.html?pageNum=3"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img11.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">한의연-미병</span><p class="ppgr_subj">이 어플리케이션은 일상 생활에서 사용자의 미병을 평가하고 관리방법을 제공하기 위한 한의학 ...</p></div></div></a></div><div class="item" itemgroupbox="3" style="padding: 5px;"><a href="./sub.html?pageNum=8"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img15.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">MCARE_V3.0</span><p class="ppgr_subj">부산대병원 진료&amp;길찾기 앱은 부산대학교병원 내부를 어디든 쉽게 찾아갈 수 있는 길찾기 기능...</p></div></div></a></div><div class="item" itemgroupbox="3" style="padding: 5px;"><a href="./sub.html?pageNum=13"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img13.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">강남대학교-발전기금</span><p class="ppgr_subj">밤과 낮 시간에 따라 배경이 변경되며 관리자 설정에 따라 비주얼 이미지를 동영상으로 변경하...</p></div></div></a></div><div class="item" itemgroupbox="3" style="padding: 5px;"><a href="./sub.html?pageNum=18"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img06.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">WESS-현장실습시스템</span><p class="ppgr_subj">NCS기반의 현장실습지원시스템 국가직무능력표준의 모듈을 적용하여 현장실습을 진행하는 학생들...</p></div></div></a></div></div><div class="itemsGroup" itemgroup="4" style="width: 20%; float: left; box-sizing: border-box;"><div class="item" itemgroupbox="4" style="padding: 5px;"><a href="./sub.html?pageNum=4"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img19.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">T&amp;D소프트</span><p class="ppgr_subj"></p></div></div></a></div><div class="item" itemgroupbox="4" style="padding: 5px;"><a href="./sub.html?pageNum=9"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img08.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">이화여대-포트폴리오-PC</span><p class="ppgr_subj">THE포트폴리오는 이화여대의 전공, 교양, 비교과 체계를 중심으로 학생들의 학습 및 교내외...</p></div></div></a></div><div class="item" itemgroupbox="4" style="padding: 5px;"><a href="./sub.html?pageNum=14"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img04.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">CMS-SYWORKS</span><p class="ppgr_subj"></p></div></div></a></div><div class="item" itemgroupbox="4" style="padding: 5px;"><a href="./sub.html?pageNum=19"><div class="ppgr_inner"><span class="ppgr_img"><img src="./images/pp_img07.jpg" alt="작업물이미지"></span><div class="ppgr_txts"><span class="ppgr_tit">해성산업</span><p class="ppgr_subj">해성산업 관계사 소개, 해성그룹 계열사, 오피스 임대업, 부동산 전문기업</p></div></div></a></div></div></div>
 			</div>
 		</div>
 	</div>
