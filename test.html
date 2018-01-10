@@ -8,71 +8,86 @@
 	if (location.href.indexOf('7999') != -1) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
 	</script>
 	<title>test</title>
-	<link rel="stylesheet" type="text/css" href="./css/style.css" />
 	<script src="./js/jquery-1.9.1.min.js"></script>
-	<script src="./js/syworks.design.plugin.js"></script>
-	<script src="./js/syworks.design.customTags.js"></script>
+	<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+	}
+	</style>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		var $this = $(this);
-		$.fn.extend({
-			cmmVisualEffect: function(obj) {
-				var defaults = {
-					canvaswidth: $(document).width(),
-					canvasheight: $(document).height(),
-					type: 0,
-					minleng: 3,
-					maxleng: 30,
-					minwidth: 10,
-					maxwidth: 30,
-					mousecursor: false,
-					circle: true,
-					color: ['#000', '#ddd'],
-				};
-				var canvas = document.getElementById(this[0].id);
-				var ctx = canvas.getContext('2d');
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		canvas.width = 300;
+		canvas.height = 200;
 
-				function CmmMycanavs($this) {
-					this.obj = $.extend(true, defaults, obj);
-					canvas.width = this.obj.canvaswidth;
-					canvas.height = this.obj.canvasheight;
-					this.init();
-				};
-				CmmMycanavs.prototype = {
-					init: function() {},
-					set: function() {},
-					update: function() {},
-					draw: function() {},
-					callb: function() {}
-				};
-				this.each(function() {
-					$.data($(this), new CmmMycanavs($(this), obj));
-				});
-				return this;
-			},
 
-		});
-		//$('#canvas').cmmVisualEffect();
-		
-		$('.tntntntntn a').click(function(){
-			$('.tntntntntn').cmmValidator();
-		});
+		function canvasFun(x, y) {
+			this.x = x;
+			this.y = y;
+			this.dx = 1;
+			this.dy = 1;
+			this.cir = 5;
+			this.gravityStep = this.y + 20;
+			this.gravityStepSun = 1.2;
+			this.stepBool = true;
+			this.cirNum = false;
+			this.gravity = .3;
+			this.draw = function() {
+
+				ctx.beginPath();
+				ctx.arc(this.x, this.y, this.cir, 0, Math.PI * 2);
+				ctx.fill();
+			};
+			this.update = function() {
+				this.dy += this.gravity;
+				if (this.y + this.cir > canvas.height) {
+					this.dy = -(this.dy - this.gravity);
+					this.cirNum = true;
+					this.cir = this.cir / this.gravityStepSun;
+				}
+				if (this.cirNum) {
+					if (this.dy < 0) {
+						if (this.y < this.gravityStep) {
+							this.dy += this.gravity;
+							if (this.y < canvas.height + this.cir) {
+								this.gravityStep = this.gravityStep * this.gravityStepSun;
+							} else {
+								this.dy = 0;
+								this.y = canvas.height - this.cir;
+							}
+						}
+
+					}
+				}
+				this.y += this.dy;
+				this.draw();
+			};
+		}
+		var canvasfun = [];
+
+		for (var i = 0; i < 20; i++) {
+			var x = Math.random() * canvas.width;
+			var y = Math.random() * 30;
+			canvasfun.push(new canvasFun(x, y));
+		}
+
+		function animate() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			canvasfun.forEach(function(item) {
+				item.update();
+			});
+			requestAnimationFrame(animate);
+		}
+		animate();
 	});
 	</script>
 </head>
 
-<body>
-	<div class="tntntntntn">
-		<input type="checkbox" data-input-class='{"required" : true}' name=""><label>asdf</label>
-		<input type="text" data-input-class='{"ime" : "string", "required" : true}' title="전화번호">
-		<input type="text" data-input-class='{"ime" : "number", "required" : true}' title="문자">
-		<input type="text" data-input-class='{"ime" : "string", "required" : true}' title="ㄴㄴㄴㄴㄴ">
-		<input type="text" data-input-class='{"ime" : "string", "required" : true}' title="ㅊㅊㅊㅊ">
-		<select data-input-class='{"required" : true}'>
-			<option value="">asdfasdf</option>
-		</select>
-		<a href="#">asdfasdf</a>
-	</div>
+<body style="background: url(images/pp_img22.jpg)">
+	<canvas id="canvas"></canvas>
 </body>
 
 </html>
