@@ -43,6 +43,72 @@ if (location.host.indexOf('7999') != -1) document.write('<script src="http://' +
 				}
 			}
 		},
+		cmmLimitTime: function(obj, callb) {
+			/*$(this).cmmLimitTime({
+				datetype: 'minu',
+				limitdate: 201801151659
+			}, function() {
+				console.log('맞다')
+			});*/
+			function CmmLimitTime() {
+				this.obj = $.extend(true, {
+					datetype: 'date', //year , month , date , hours, minu
+					limitdate: 0,
+				}, obj);
+				this.newdate = new Date();
+				this.date = {
+					year: this.newdate.getFullYear(),
+					month: this.newdate.getMonth() + 1 >= 10 ? this.newdate.getMonth() + 1 : '0' + (this.newdate.getMonth() + 1),
+					date: this.newdate.getDate(),
+					hours: this.newdate.getHours(),
+					minu: this.newdate.getMinutes(),
+				};
+				this.fullDate = 0;
+				this.callb = callb;
+				this.init();
+			};
+			CmmLimitTime.prototype = {
+				init: function() {
+					this.fulldateFun();
+					this.act();
+				},
+				fulldateFun: function() {
+					var d = 0;
+					switch (this.obj.datetype) {
+						case 'year':
+							d = Number(this.date.year);
+							break;
+						case 'month':
+							d = Number(this.date.year + '' + this.date.month);
+							break;
+						case 'date':
+							d = Number(this.date.year + '' + this.date.month + '' + this.date.date);
+							break;
+						case 'hours':
+							d = Number(this.date.year + '' + this.date.month + '' + this.date.date + '' + this.date.hours);
+							break;
+						case 'minu':
+							d = Number(this.date.year + '' + this.date.month + '' + this.date.date + '' + this.date.hours + '' + this.date.minu);
+							break;
+					}
+					this.fulldate = d;
+					console.log(this.fulldate)
+				},
+				act: function() {
+					if (this.obj.limitdate) {
+						if (this.fulldate >= this.obj.limitdate) {
+							if (typeof this.callb === 'function') {
+								this.callb();
+							}
+						}
+					}
+				}
+			};
+			this.each(function() {
+				$.data($(this), new CmmLimitTime($(this), obj));
+			});
+			return this;
+		},
 		cmmValidator: function(obj) {
 			/*
 			$('.tntntntntn a').click(function(){

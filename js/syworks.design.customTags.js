@@ -31,34 +31,6 @@ $.fn.extend({
 				}
 			}
 		});
-		$this.find('input').each(function() {
-			var $data = $(this).data('input');
-			if ($data && typeof $data === 'object') {
-				console.log($data)
-				for (var i in $data) {
-					switch (i) {
-						case 'number':
-							var num = 0;
-							var inv = 1;
-							$(this).wrap('<span class="dataInputNumber"></span>');
-							$(this).closest('.dataInputNumber').append('<span class="dataInputBtnGroup"><a href="#;" class="dataInputBtns up">위로</a><a href="#;" class="dataInputBtns down">아래로</a></span>');
-							$('.dataInputBtns').mousedown(function() {
-								var $input = $(this).closest('.dataInputNumber').find('input');
-								var $inputVal = $input.val();
-								if ($(this).is('.up')) {
-									inv = 1;
-								} else {
-									inv = -1;
-								}
-								num += inv;
-								console.log(num)
-								$input.val(num);
-							});
-							break;
-					}
-				}
-			}
-		});
 		/* 셀렉트 */
 		;
 		(function($) {
