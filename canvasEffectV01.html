@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="theme-color" content="#3F51B5">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<script>
+	if (location.href.indexOf('7999') != -1) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+	</script>
+	<title>test</title>
+	<link rel="stylesheet/less" type="text/css" href="./css/styles.less" />
+	<script src="./js/jquery-1.9.1.min.js"></script>
+	<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+	}
+	</style>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		var cnt = 100;
+		canvas.width = $(document).width();
+		canvas.height = $(document).height();
+		var Canvas = function(x, y, dx, dy) {
+			this.x = x;
+			this.y = y;
+			this.dx = dx;
+			this.dy = dy;
+			this.inx = 0;
+			this.iny = 0;
+			this.distance = 100;
+			this.lineArry = [];
+			this.draw = function() {
+				lineArry.push({ x: this.x, y: this.y });
+				//console.log(lineArry)
+				ctx.beginPath();
+				ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+				ctx.stroke();
+				ctx.closePath();
+				for (var j = 0; j < lineArry.length; j++) {
+					if (Math.abs(this.x - lineArry[j].x) < this.distance && Math.abs(this.y - lineArry[j].y) < this.distance) {
+						ctx.beginPath();
+						ctx.moveTo(this.x, this.y);
+						ctx.lineTo(lineArry[j].x, lineArry[j].y);
+						ctx.stroke();
+						ctx.closePath();
+					}
+				}
+			};
+			this.update = function() {
+				if (this.inx > this.distance || this.inx < -this.distance || this.x > canvas.width || this.x < 0) {
+					this.dx = -this.dx;
+				}
+				if (this.iny > this.distance || this.iny < -this.distance || this.y > canvas.width || this.y < 0) {
+					this.dy = -this.dy;
+				}
+				this.x += this.dx;
+				this.inx += this.dx;
+				this.y += this.dy;
+				this.iny += this.dy;
+				this.draw();
+			};
+
+		};
+		var canvasfun = [];
+		var lineArry = [];
+		for (var i = 0; i < cnt; i++) {
+			var x = Math.random() * canvas.width;
+			var y = Math.random() * canvas.height;
+			var dx = (Math.random() * 1) > .5 ? .05 : -.05;
+			var dy = (Math.random() * 1) > .5 ? -.05 : .05;
+			canvasfun.push(new Canvas(x, y, dx, dy));
+		}
+
+		function animate() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			canvasfun.forEach(function(item) {
+				item.update();
+			});
+			lineArry = [];
+			requestAnimationFrame(animate);
+		}
+		animate();
+	});
+	</script>
+	<!--[if lt IE 9]>
+                    <script type='text/javascript' src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+                    <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+                    <script src="http://jamesallardice.github.io/Placeholders.js/assets/js/placeholders.min.js"></script>
+                <![endif]-->
+</head>
+
+<body style="background: url(images/pp_img22.jpg)">
+	<canvas id="canvas"></canvas>
+</body>
+
+</html>
