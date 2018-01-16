@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="theme-color" content="#3F51B5">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<script>
+	if (location.href.indexOf('7999') != -1) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+	</script>
+	<title>test</title>
+	<link rel="stylesheet/less" type="text/css" href="./css/styles.less" />
+	<script src="./js/jquery-1.9.1.min.js"></script>
+	<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+	}
+	</style>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		var centerLineX = $(document).width() / 2;
+		var cnt = 300;
+		canvas.width = $(document).width();
+		canvas.height = $(document).height();
+		ctx.fillStyle = 'rgba(0,0,0,.1)';
+		var AniFun = function(x, y, gravity) {
+			this.x = x;
+			this.y = y;
+			this.dx = .1;
+			this.dy = .1;
+			this.inx = x;
+			this.iny = y;
+			this.indx = .1;
+			this.indy = .1;
+			this.gravity = gravity;
+			this.width = gravity;
+			this.radian = 0;
+			this.radianFun = function(x, y) {
+				var x = x;
+				var dx = centerLineX - x;
+				var mitbun = x - dx;
+				return ((canvas.height - y) / mitbun) * (Math.PI / 180);
+			};
+			this.init = (function(_this) {
+				if (_this.x > centerLineX) {
+					_this.dx = _this.dx;
+					_this.gravity = _this.gravity;
+				} else {
+					_this.radian = _this.radianFun(_this.x, _this.y);
+					_this.dx = -_this.dx;
+					_this.gravity = -_this.gravity;
+				}
+			})(this);
+			this.virCentLine = function() {
+				ctx.beginPath();
+				ctx.moveTo(canvas.width / 2, 0);
+				ctx.lineTo(canvas.width / 2, canvas.height);
+				ctx.strokeStyle = '#fafafa';
+				ctx.stroke();
+				ctx.closePath();
+			};
+			this.draw = function() {
+				this.virCentLine();
+				ctx.beginPath();
+				ctx.arc(this.x, this.y, Math.abs(this.width ), 0, Math.PI * 2);
+				ctx.fill();
+				ctx.closePath();
+			};
+			this.update = function() {
+				this.infinite();
+				this.dx += this.gravity;
+				this.width += this.gravity;
+				this.dy += Math.abs(this.gravity);
+				this.x += this.dx;
+				this.y += this.dy;
+				this.draw();
+			};
+			this.infinite = function() {
+				if (this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0) {
+					this.x = this.inx;
+					this.dx = this.indx;
+					this.y = this.iny;
+					this.dy = this.indy;
+					this.width = gravity;
+				}
+			};
+		};
+		var arry = [];
+		for (var i = 0; i < cnt; i++) {
+			var x = Math.random() * canvas.width;
+			var y = Math.random() * canvas.height;
+			var gravity = .05;
+			arry.push(new AniFun(x, y, gravity));
+		}
+		var loop = function() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			arry.forEach(function(item) {
+				item.update();
+			});
+			requestAnimationFrame(loop);
+		};
+		loop();
+	});
+	</script>
+	<!--[if lt IE 9]>
+                    <script type='text/javascript' src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+                    <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+                    <script src="http://jamesallardice.github.io/Placeholders.js/assets/js/placeholders.min.js"></script>
+                <![endif]-->
+</head>
+
+<body style="background: url(images/Untitled-2.png)">
+	<!-- style="background: url(images/pp_img22.jpg)" -->
+	<canvas id="canvas"></canvas>
+</body>
+
+</html>
