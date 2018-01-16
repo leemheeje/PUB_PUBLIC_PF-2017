@@ -22,7 +22,7 @@
 	$(document).ready(function() {
 		var canvas = document.getElementById('canvas');
 		var ctx = canvas.getContext('2d');
-		var cnt = 100;
+		var cnt = 70;
 		canvas.width = $(document).width();
 		canvas.height = $(document).height();
 		var Canvas = function(x, y, dx, dy) {
@@ -33,23 +33,28 @@
 			this.inx = 0;
 			this.iny = 0;
 			this.distance = 100;
+			this.offsetX = 0;
+			this.offsetY = 0;
+			this.strokeStyle = 'rgba(217,44,94,.3)';
 			this.lineArry = [];
 			this.draw = function() {
 				lineArry.push({ x: this.x, y: this.y });
-				//console.log(lineArry)
-				ctx.beginPath();
-				ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
-				ctx.stroke();
-				ctx.closePath();
 				for (var j = 0; j < lineArry.length; j++) {
 					if (Math.abs(this.x - lineArry[j].x) < this.distance && Math.abs(this.y - lineArry[j].y) < this.distance) {
 						ctx.beginPath();
 						ctx.moveTo(this.x, this.y);
 						ctx.lineTo(lineArry[j].x, lineArry[j].y);
+						ctx.strokeStyle = this.strokeStyle;
 						ctx.stroke();
 						ctx.closePath();
 					}
 				}
+				ctx.beginPath();
+				ctx.arc(this.x, this.y, .5, 0, Math.PI * 2);
+				ctx.strokeStyle = 'rgba(217,44,94,.1)';
+				ctx.stroke();
+				ctx.closePath();
+
 			};
 			this.update = function() {
 				if (this.inx > this.distance || this.inx < -this.distance || this.x > canvas.width || this.x < 0) {
@@ -58,21 +63,39 @@
 				if (this.iny > this.distance || this.iny < -this.distance || this.y > canvas.width || this.y < 0) {
 					this.dy = -this.dy;
 				}
+				if (this.offsetX && this.offsetY && (this.x < this.offsetX + this.distance && this.x > this.offsetX - this.distance) && (this.y < this.offsetY + this.distance && this.y > this.offsetY - this.distance)) {
+					this.strokeStyle = 'rgba(166,11,55,1)';
+				} else {
+					this.strokeStyle = 'rgba(217,44,94,.3)';
+				}
 				this.x += this.dx;
 				this.inx += this.dx;
 				this.y += this.dy;
 				this.iny += this.dy;
 				this.draw();
 			};
-
+			this.bind = function() {
+				var _this = this;
+				$('#canvas').on({
+					'mousemove': function(e) {
+						_this.offsetX = e.offsetX;
+						_this.offsetY = e.offsetY;
+					},
+					'mouseout': function() {
+						_this.offsetX = 0;
+						_this.offsetY = 0;
+					}
+				});
+			};
+			this.bind();
 		};
 		var canvasfun = [];
 		var lineArry = [];
 		for (var i = 0; i < cnt; i++) {
 			var x = Math.random() * canvas.width;
 			var y = Math.random() * canvas.height;
-			var dx = (Math.random() * 1) > .5 ? .05 : -.05;
-			var dy = (Math.random() * 1) > .5 ? -.05 : .05;
+			var dx = (Math.random() * 1) > .5 ? .1 : -.1;
+			var dy = (Math.random() * 1) > .5 ? -.1 : .1;
 			canvasfun.push(new Canvas(x, y, dx, dy));
 		}
 
@@ -94,7 +117,8 @@
                 <![endif]-->
 </head>
 
-<body style="background: url(images/pp_img22.jpg)">
+<body style="background: #1a1a1a">
+	<!-- style="background: url(images/pp_img22.jpg)" -->
 	<canvas id="canvas"></canvas>
 </body>
 
