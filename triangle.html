@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="theme-color" content="#3F51B5">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<script>
+	if (location.href.indexOf('7999') != -1) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+	</script>
+	<title>test</title>
+	<link rel="stylesheet/less" type="text/css" href="./css/styles.less" />
+	<script src="./js/jquery-1.9.1.min.js"></script>
+	<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+	}
+	</style>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		var tanAngle = Math.atan2(150, 100) * 180 / Math.PI;
+		console.log(150 / tanAngle)
+		canvas.width = 500;
+		canvas.height = 500;
+
+		var x = 150;
+		var y = 150;
+		var ad = 100 / 150;
+		function animate() {
+			requestAnimationFrame(animate);
+			if(x > 50 && y < 300){
+			x -= 1*ad
+			y += 1;
+			}
+			ctx.clearRect(0, 0, 500, 500);
+			ctx.beginPath();
+			ctx.moveTo(150, 150);
+			ctx.lineTo(150, 300);
+			ctx.lineTo(50, 300);
+			ctx.stroke();
+			ctx.closePath();
+			/**/
+			ctx.beginPath();
+			ctx.moveTo(150, 150);
+			ctx.lineTo(x,y);
+			ctx.stroke();
+			ctx.closePath();
+			/**/
+		}
+		animate();
+	});
+	</script>
+	<!--[if lt IE 9]>
+                    <script type='text/javascript' src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+                    <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+                    <script src="http://jamesallardice.github.io/Placeholders.js/assets/js/placeholders.min.js"></script>
+                <![endif]-->
+</head>
+
+<body style="background: url(images/pp_img22.jpg)">
+	<!-- style="background: url(images/pp_img22.jpg)" -->
+	<canvas id="canvas"></canvas>
+</body>
+
+</html>
