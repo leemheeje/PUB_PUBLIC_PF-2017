@@ -18,13 +18,19 @@
 	</style>
 	<script type="text/javascript">
 	$(document).ready(function() {
+		$.getJSON('test.json',function(data){
+			console.log(data)
+		});
 		var canvas = document.getElementById('canvas');
 		var ctx = canvas.getContext('2d');
+		/*canvas.width = $(document).width();
+		canvas.height = $(document).height();*/
 		canvas.width = 300;
 		canvas.height = 200;
 
 
-		function canvasFun(x, y) {
+		function canvasFun(x, y, delay) {
+			this.delay = delay;
 			this.x = x;
 			this.y = y;
 			this.dx = 1;
@@ -35,11 +41,16 @@
 			this.stepBool = true;
 			this.cirNum = false;
 			this.gravity = .3;
+			this.buubBool = false;
+			this.bubxLeft = x;
+			this.bubxRight = x;
+			this.buby = y;
 			this.draw = function() {
-
 				ctx.beginPath();
+				ctx.fillStyle = "black";
 				ctx.arc(this.x, this.y, this.cir, 0, Math.PI * 2);
 				ctx.fill();
+				ctx.closePath();
 			};
 			this.update = function() {
 				this.dy += this.gravity;
@@ -47,6 +58,9 @@
 					this.dy = -(this.dy - this.gravity);
 					this.cirNum = true;
 					this.cir = this.cir / this.gravityStepSun;
+					if (this.cir > 1) {
+						this.buubBool = true;;
+					}
 				}
 				if (this.cirNum) {
 					if (this.dy < 0) {
@@ -62,16 +76,34 @@
 
 					}
 				}
+				if (this.buubBool) {
+					this.buub();
+				}
 				this.y += this.dy;
 				this.draw();
+			};
+			this.buub = function() {
+				this.buby = this.y + 30;
+				if (this.buby > canvas.height) {
+					//this.buby = canvas.height-this.cir;
+				}
+				ctx.beginPath();
+				ctx.fillStyle = "red";
+				ctx.arc(this.bubxLeft, this.buby, this.cir / 1.2, 0, Math.PI * 2);
+				ctx.arc(this.bubxRight, this.buby, this.cir / 1.2, 0, Math.PI * 2);
+				ctx.fill();
+				ctx.closePath();
+				this.bubxLeft--;
+				this.bubxRight++;
 			};
 		}
 		var canvasfun = [];
 
-		for (var i = 0; i < 20; i++) {
+		for (var i = 0; i < 3; i++) {
 			var x = Math.random() * canvas.width;
-			var y = Math.random() * 30;
-			canvasfun.push(new canvasFun(x, y));
+			var y = Math.random() * canvas.height / 2;
+			var delay = Math.random() * 3000;
+			canvasfun.push(new canvasFun(x, y, delay));
 		}
 
 		function animate() {
