@@ -165,6 +165,210 @@
 						</div>
 						<div class="bx_in">
 							<div class="abu_lf">
+								<div class="cmm_tit">레이어팝</div>
+								<ul class="cmm_txtlst">
+									<li>퍼블리셔 영역에서 실질적으로 파라미터값을 조정하는 경우는 드물지만, <b class="c_blc">개발영역에서 던져주는 파라미터값을 받아 작업</b>을 해야할때가 있습니다. 그럴때 사용하여, <b class="c_blc">customTags() 등등 2차가공</b>에 사용됩니다.</li>
+									<li>해당함수의 매개변수로 파라미터네임을 선언한 뒤 네임에 맞는 값을 출력합니다.</li>
+								</ul>
+								<div class="pre">
+									<pre>
+cmmLocLaypop: function(obj) {
+	var defaults = {
+		type: '',
+		align: true,
+		width: 320,
+		openAfterScroll: false,
+		animation: true,
+		effect: 'fade', // fade, slidedown,
+		title: '타이틀',
+		targetBtnsName: ['취소', '확인'],
+		submit: null,
+	};
+
+	function CmmLocLaypop($this) {
+		var _this = this;
+		this.target = $this;
+		this.obj = typeof obj === 'object' ? $.extend(true, defaults, obj) : obj;
+		this.dimmClsName = '.cmm_dimm';
+		this.targetParent = '.laypopWarp';
+		this.targetParentIn = '.laypopIn';
+		this.targetTitle = '.laypopTit';
+		this.targetCont = '.laypopCont';
+		this.targetBottom = '.laypopBottom';
+		this.targetBtns = ['.layClosebtn', '.laySmtbtn'];
+		this.cont = '';
+		this.title = '';
+		this.bottom = '';
+		this.init();
+	};
+	CmmLocLaypop.prototype = {
+		init: function() {
+			if (this.obj == 'close') {
+				this.act().hide();
+				return;
+			}
+			this.set();
+			this.dimm().set();
+			this.act().show();
+			this.close();
+			this.submitFun();
+		},
+		set: function() {
+			this.cont += '<div class="' + this.clsFormat(this.targetParent) + '">';
+			this.cont += '<div class="' + this.clsFormat(this.targetParentIn) + '" style="width: ' + this.obj.width + 'px;">';
+			this.cont += '<div class="' + this.clsFormat(this.targetCont) + '">';
+			if (this.obj.type == 'alert') {
+				this.cont += '<div class="alert_msg">' + this.obj.msg + '</div>';
+			}
+			this.cont += '</div>';
+			this.cont += '</div>';
+			this.cont += '</div>';
+			this.title += '<div class="' + this.clsFormat(this.targetTitle) + '">';
+			this.title += this.obj.title;
+			this.title += '<a href="#;" class="' + this.clsFormat(this.targetBtns[0]) + '">닫기</a>';
+			this.title += '</div>';
+			this.bottom += '<div class="' + this.clsFormat(this.targetBottom) + '">';
+			if (this.obj.type != 'alert') {
+				this.bottom += '<a href="#;" class="' + this.clsFormat(this.targetBtns[0]) + '">' + this.obj.targetBtnsName[0] + '</a>';
+			} else {
+				this.bottom += '<a href="#;" class="' + this.clsFormat(this.targetBtns[1]) + '">' + this.obj.targetBtnsName[0] + '</a>';
+			}
+			if (this.obj.type != 'alert') {
+				this.bottom += '<a href="#;" class="' + this.clsFormat(this.targetBtns[1]) + '">' + this.obj.targetBtnsName[1] + '</a>';
+			}
+			this.bottom += '</div>';
+			if (!$(this.target).closest(this.targetParent).length) {
+				$(this.target).wrap(this.cont);
+				$(this.target).closest(this.targetParentIn).prepend(this.title);
+				$(this.target).closest(this.targetParentIn).append(this.bottom);
+				this.cont = '';
+				this.title = '';
+				this.bottom = '';
+			}
+			$(this.target).show();
+			$(this.target).closest(this.targetParent).hide();
+			this.alignFun();
+		},
+		alignFun: function() {
+			var sc = {
+				val: $(document).scrollTop(),
+			};
+			$(this.target).closest(this.targetParent).css({
+				'top': sc.val + 50,
+			});
+		},
+		submitFun: function() {
+			var _this = this;
+			$(_this.target).closest(_this.targetParent).find(this.targetBtns[1]).off().on({
+				'click': function() {
+					if (typeof _this.obj.submit === 'function' && _this.obj.submit) {
+						_this.obj.submit($(this).closest(_this.targetParent));
+					} else {
+						_this.act().hide();
+					}
+				}
+			});
+		},
+		scrLock: function(bool) {
+			if (bool) {
+				$('body').css({
+					'overflow-y': 'hidden'
+				});
+			} else {
+				$('body').css({
+					'overflow-y': 'visible'
+				});
+			}
+		},
+		close: function() {
+			var _this = this;
+			$(document).keyup(function() {
+				if (event.keyCode == 27) {
+					_this.act().hide();
+				}
+			});
+			$(_this.target).closest(_this.targetParent).find(this.targetBtns[0]).on({
+				'click': function() {
+					_this.act().hide();
+				}
+			});
+		},
+		act: function(bool) {
+			var _this = this;
+			return {
+				show: function() {
+					$(_this.target).closest(_this.targetParent).show();
+					_this.dimm().get(true);
+					_this.scrLock(true);
+				},
+				hide: function() {
+					$(_this.target).closest(_this.targetParent).hide();
+					_this.dimm().get(false);
+					_this.scrLock(false);
+					if (_this.obj.type == 'alert') {
+						$('.cmmAlert').closest(_this.targetParent).remove();
+					}
+				}
+			};
+		},
+		dimm: function() {
+			var _this = this;
+			return {
+				set: function() {
+					$(_this.target).closest(_this.targetParent).append('<div class="' + _this.clsFormat(_this.dimmClsName) + '" style="display: none;"></div>');
+					$(_this.dimmClsName).css({
+						'position': 'fixed',
+						'z-index': 100,
+						'left': 0,
+						'top': 0,
+						'bottom': 0,
+						'width': '100%',
+						'opacity': 0,
+						'background': 'black'
+					});
+				},
+				get: function(bool, callb) {
+					if (bool) {
+						$(_this.target).closest(_this.targetParent).find(_this.dimmClsName).show().animate({
+							'opacity': .2
+						}, $.extend({
+							'complete': function() {}
+						}, callb));
+					} else {
+						$(_this.target).closest(_this.targetParent).find(_this.dimmClsName).animate({
+							'opacity': 0
+						}, $.extend({
+							'complete': function() {
+								$(this).remove();
+							}
+						}, callb));
+					}
+				},
+			};
+		},
+		aniCallb: function(obj) {
+			return $.extend({
+				'duration': 600,
+				'easing': 'swing',
+				'complete': function() {},
+				'step': function() {}
+			}, obj);
+		},
+		clsFormat: function(str) {
+			return str.replace('.', '');
+		},
+	};
+	this.each(function() {
+		$.data(this, new CmmLocLaypop($(this), obj));
+	});
+	return this;
+},
+                                        </pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
 								<div class="cmm_tit">맵API
 									<span class="sm"><b class="">DAUM_MAP</b>기반</span>
 								</div>

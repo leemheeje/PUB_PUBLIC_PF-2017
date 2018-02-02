@@ -214,6 +214,7 @@ if (location.host.indexOf('7999') != -1) document.write('<script src="http://' +
 				targetBtnsName: ['확인'],
 				msg: '',
 				submit: function($el) {
+					$el.cmmLocLaypop('close');
 					$el.remove();
 				},
 			}, obj));
@@ -275,7 +276,7 @@ if (location.host.indexOf('7999') != -1) document.write('<script src="http://' +
 					this.cont += '</div>';
 					this.title += '<div class="' + this.clsFormat(this.targetTitle) + '">';
 					this.title += this.obj.title;
-					this.title += '<a href="#;" class="' + this.clsFormat(this.targetBtns[0]) + '">닫기</a>';
+					this.title += '<a href="#;" class="' + this.clsFormat(this.targetBtns[0]) + '" title="팝업닫기"><span class="ti-close"></span></a>';
 					this.title += '</div>';
 					this.bottom += '<div class="' + this.clsFormat(this.targetBottom) + '">';
 					if (this.obj.type != 'alert') {
@@ -355,6 +356,7 @@ if (location.host.indexOf('7999') != -1) document.write('<script src="http://' +
 							$(_this.target).closest(_this.targetParent).hide();
 							_this.dimm().get(false);
 							_this.scrLock(false);
+							console.log(121212)
 							if (_this.obj.type == 'alert') {
 								$('.cmmAlert').closest(_this.targetParent).remove();
 							}

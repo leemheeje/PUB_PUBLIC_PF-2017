@@ -39,24 +39,37 @@
 			<script type="text/javascript" src="./js/mainGridHtmlPars.js"></script>
 			<script type="text/javascript">
 			$(document).ready(function() {
-				mainGridHtml.set({
-					maxlengh: 50
-				});
-				$('.ppGrid').rspGrid({
-					setBox: {
-						items: '.item',
-						width: 270,
-						margin: 10
+				/*$('[data-layerpop="tnvhtb"]').cmmLocLaypop({
+					title: '포트폴리오 설명',
+					width: 640,
+					targetBtnsName: ['aaaa', '확인'],
+					submit: function($this) {
+						$this.cmmLocLaypop('close');
+						//$(this).cmmAlert({ title: 'asdf', msg: 'asfasdfasdfasdfasfasdfasdf' });
+						ptnd();
 					},
-					animateOfOptions: {
-						mode: 'opacity', // flip,opacity
-						duration: 500,
-						ease: 'easeOutExpo',
-					}
-				});
-				$('.count_up .cnum').each(function() {
-					$(this).numberEffect();
-				});
+				});*/
+				ptnd();
+				function ptnd() {
+					mainGridHtml.set({
+						maxlengh: 50
+					});
+					$('.ppGrid').rspGrid({
+						setBox: {
+							items: '.item',
+							width: 270,
+							margin: 10
+						},
+						animateOfOptions: {
+							mode: 'flip', // flip,opacity
+							duration: 500,
+							ease: 'easeOutExpo',
+						}
+					});
+					$('.count_up .cnum').each(function() {
+						$(this).numberEffect();
+					});
+				}
 			});
 			</script>
 			<div class="contents">
@@ -64,4 +77,5 @@
 			</div>
 		</div>
 	</div>
+	<div class="cmm_layerpop" data-layerpop="tnvhtb"> 내용 </div>
 </body>

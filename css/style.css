@@ -183,3 +183,5 @@ img{max-width: 100%; vertical-align: top; -webkit-touch-callout: none; -webkit-u
 
 
 .miscContent{line-height: 1.35;}
+.wrap{position: relative; z-index: 2;}
+#canvas{position: fixed; left: 0; top: 0; bottom: 0; z-index: 1;}
