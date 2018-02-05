@@ -1,0 +1,19 @@
+{
+  "name": "leemheeje-plugin",
+  "version": "1.0.0",
+  "description": "'임희재프로젝트입니다.'",
+  "main": "index.js",
+  "dependencies": {
+    "leemheeje-plugin": "^0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "'https://github.com/leemheeje/public.git'"
+  },
+  "author": "'leemheeje'",
+  "license": "ISC"
+}
