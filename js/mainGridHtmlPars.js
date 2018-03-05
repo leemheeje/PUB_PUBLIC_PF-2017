@@ -10,12 +10,61 @@ var mainGridHtml = {
 	},
 	//res,IE8++,js,cms,tmc,hyb
 	items: [{
+		img: './images/pp_ybm0501.jpg',
+		subImgs: ['./images/pp_ybm0502.jpg','./images/pp_ybm0503.jpg','./images/pp_ybm0504.jpg'],
+		tit: 'YBM-GAME-RIVERCROSSING',
+		subj: 'Houghton Mifflin Harcourt사의 유명한 교과서인 Journeys와 Story Town의 Leveled Reader최신판을...',
+		mode: 'js,IE10++',
+		href: '개발중입니다..',
+		//href: 'https://leemheeje.github.io/06_YBM-GAME-RiverCrossing/html/',
+		chat: 100
+	},{
+		img: './images/pp_ybm0201.jpg',
+		subImgs: ['./images/pp_ybm0202.jpg','./images/pp_ybm0203.jpg','./images/pp_ybm0204.jpg'],
+		tit: 'YBM-GAME-BASEBALL',
+		subj: 'Houghton Mifflin Harcourt사의 유명한 교과서인 Journeys와 Story Town의 Leveled Reader최신판을...',
+		mode: 'js,IE10++',
+		href: 'https://leemheeje.github.io/06_YBM-GAME-BASEBALL/html/', 
+		chat: 100
+	},{
+		img: './images/pp_ybm0301.jpg',
+		subImgs: ['./images/pp_ybm0302.jpg','./images/pp_ybm0303.jpg','./images/pp_ybm0304.jpg'],
+		tit: 'YBM-GAME-CROCODILE',
+		subj: 'Houghton Mifflin Harcourt사의 유명한 교과서인 Journeys와 Story Town의 Leveled Reader최신판을...',
+		mode: 'js,IE10++',
+		href: 'https://leemheeje.github.io/YBM-GAME-CROCO/html/', 
+		chat: 100
+	},{
+		img: './images/pp_ybm0101.jpg',
+		subImgs: ['./images/pp_ybm0102.jpg','./images/pp_ybm0103.jpg','./images/pp_ybm0104.jpg'],
+		tit: 'YBM-GAME-BULDBRIDGE',
+		subj: 'Houghton Mifflin Harcourt사의 유명한 교과서인 Journeys와 Story Town의 Leveled Reader최신판을...',
+		mode: 'js,IE10++',
+		href: 'https://leemheeje.github.io/YBM-GAME/html/', 
+		chat: 100
+	},{
+		img: './images/pp_ybm0401.jpg',
+		subImgs: ['./images/pp_ybm0402.jpg','./images/pp_ybm0403.jpg','./images/pp_ybm0404.jpg'],
+		tit: 'YBM-GAME-YAMMYPUZZLE',
+		subj: 'Houghton Mifflin Harcourt사의 유명한 교과서인 Journeys와 Story Town의 Leveled Reader최신판을...',
+		mode: 'js,IE10++',
+		href: '접속오류..', 
+		chat: 20
+	},/*{
+		img: './images/pp_img22.jpg',
+		subImgs: ['./images/pp_img22_01.jpg', './images/pp_img22_02.jpg', './images/pp_img22_03.jpg', './images/pp_img22_04.jpg', './images/pp_img22_05.jpg'],
+		tit: 'YBM-디지털교과서',
+		subj: '창의체험활동, 창의체험 프로그램, 창의인성교육, 현장체험학습, 지속가능발전교육, 자유학기제 체험활...',
+		mode: 'js,IE10++,epub',
+		href: 'http://edu.ingang.go.kr/NGLMS/High/UserMain.do', 
+		chat: 50
+	},*/{
 		img: './images/pp_img22.jpg',
 		subImgs: ['./images/pp_img22_01.jpg', './images/pp_img22_02.jpg', './images/pp_img22_03.jpg', './images/pp_img22_04.jpg', './images/pp_img22_05.jpg'],
 		tit: '한국과학창의재단-크레존',
 		subj: '창의체험활동, 창의체험 프로그램, 창의인성교육, 현장체험학습, 지속가능발전교육, 자유학기제 체험활...',
 		mode: 'cms,js,res,IE9++',
-		href: 'http://edu.ingang.go.kr/NGLMS/High/UserMain.do',
+		href: 'https://www.crezone.net',
 		chat: 80
 	}, {
 		img: './images/pp_img21.jpg',

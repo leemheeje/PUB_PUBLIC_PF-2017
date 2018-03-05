@@ -18,8 +18,14 @@
 	</style>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$.getJSON('test.json',function(data){
-			console.log(data)
+		$.ajax({
+			url : './data/dataPfpItems.json',
+			complete:function(data){
+				console.log(data.responseJSON)
+			}
+		});
+		$.getJSON('./data/dataPfpItems.json',function(data){
+			//console.log(data)
 		});
 		var canvas = document.getElementById('canvas');
 		var ctx = canvas.getContext('2d');
@@ -53,6 +59,7 @@
 				ctx.closePath();
 			};
 			this.update = function() {
+				console.log(this.dy)
 				this.dy += this.gravity;
 				if (this.y + this.cir > canvas.height) {
 					this.dy = -(this.dy - this.gravity);
@@ -99,7 +106,7 @@
 		}
 		var canvasfun = [];
 
-		for (var i = 0; i < 3; i++) {
+		for (var i = 0; i < 1; i++) {
 			var x = Math.random() * canvas.width;
 			var y = Math.random() * canvas.height / 2;
 			var delay = Math.random() * 3000;

@@ -101,6 +101,7 @@ img{max-width: 100%; vertical-align: top; -webkit-touch-callout: none; -webkit-u
 .sj_lst .label.cms{border-color: #5cb85c; color: #5cb85c;}
 .sj_lst .label.hyb{border-color: #666; color: #666;}
 .sj_lst .label.tmc{border-color: #f0ad4e; color: #f0ad4e;}
+.sj_lst .label.epub{border-color: #85b916; color: #85b916;}
 .sj_lst.perc{padding-left: 80px;}
 .sj_lst.perc dd{text-indent: 0;}
 .sj_lst.perc .cht_bar{position: relative; padding-right: 50px;}
