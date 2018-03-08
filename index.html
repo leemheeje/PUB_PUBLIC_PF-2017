@@ -50,6 +50,7 @@
 					},
 				});*/
 				ptnd();
+
 				function ptnd() {
 					mainGridHtml.set({
 						maxlengh: 50
@@ -64,11 +65,21 @@
 							mode: 'flip', // flip,opacity
 							duration: 500,
 							ease: 'easeOutExpo',
+						},
+						renderAfterCallb: function() {
+							$('.item > a').each(function() {
+								var $this = $(this);
+								var $thisHeight = $this.height();
+								var ry = $thisHeight > 320 ? '5' : '3';
+								$this.musMoveDragPraxx({
+									motions: [
+										[$this, '2', '8', '8', '5', ry],
+									],
+								});
+							});
 						}
 					});
-					$('.count_up .cnum').each(function() {
-						$(this).numberEffect();
-					});
+
 				}
 			});
 			</script>
