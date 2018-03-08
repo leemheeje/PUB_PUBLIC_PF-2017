@@ -1,6 +1,6 @@
 if (location.host.indexOf('7999') != -1) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
 /*
- * 제작자 : 싸이웍스 - 임희재프로 
+ * 제작자 : 웹사업부 - 임희재대리
  * 버전 : v.06 
  * 수정내용 : cmmLocLaypop 추가 / customScrollBar 수정
  */
