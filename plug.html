@@ -55,7 +55,7 @@
 					});
 					return false;
 				});
-				$('.pre').each(function(){
+				$('.pre').each(function() {
 					$(this).customScrollBar();
 				});
 			});
@@ -364,6 +364,116 @@ cmmLocLaypop: function(obj) {
 	return this;
 },
                                         </pre>
+								</div>
+							</div>
+						</div>
+						<div class="bx_in">
+							<div class="abu_lf">
+								<div class="cmm_tit">스크롤바</div>
+								<ul class="cmm_txtlst">
+									<!-- <li>브라우저스크롤 <b class="c_blc">개발영역에서 던져주는 파라미터값을 받아 작업</b>을 해야할때가 있습니다. 그럴때 사용하여, <b class="c_blc">customTags() 등등 2차가공</b>에 사용됩니다.</li> -->
+									<li>브라우저스크롤을 활용하여 <b class="c_blc">가상스크롤</b>(디자인적인 측면에서 활용)</li>
+									<li><b class="c_blc">jQueryUI-draggable</b>을 활용하여 제작.</li>
+								</ul>
+								<div class="pre">
+									<pre>
+										
+	customScrollBar: function(obj) {
+		var defaults = {
+			scrVal: {
+				num: 50,
+				callb: {
+					'duration': 300,
+					'easing': 'easeOutExpo',
+					'complete': function() {}
+				},
+			},
+			scrEl: {
+				bx: 'scr_wrap',
+				el: 'scr_bar',
+				btn: 'scr_btn',
+			},
+			drag: true,
+		};
+
+		function CustomScrollBar($this) {
+			var _this = this;
+			this.el = $this;
+			this.scr = {
+				outw: $this.outerWidth(),
+				scrw: $this[0].clientWidth,
+				outh: $this.outerHeight(),
+				scrh: $this[0].scrollHeight,
+			};
+			this.scrClassName = {
+				wrap: 'scrWrap',
+				btn: 'scrBtn',
+				bar: 'scrBar',
+			};
+			this.html = '';
+			this.obj = $.extend(true, defaults, obj);
+			this.init();
+		};
+		CustomScrollBar.prototype = {
+			init: function() {
+				if (this.scr.outw > this.scr.scrw) {
+					this.set();
+					this.bind();
+				}
+			},
+			set: function() {
+				var $this = this.el;
+				this.html = '<div class="' + this.obj.scrEl.el + ' ' + this.scrClassName.bar + '"><span class="' + this.obj.scrEl.btn + ' ' + this.scrClassName.btn + '"></span></div>';
+				var scrBtnHei = (this.scr.outh / this.scr.scrh) * 100;
+				if (!$this.closest('.' + this.scrClassName.wrap).length) {
+					$this.wrap('<div class="' + this.obj.scrEl.bx + ' ' + this.scrClassName.wrap + '" style="width:' + this.scr.outw + 'px; overflow: hidden;"></div>').css({
+						'margin-right': -(this.scr.outw - this.scr.scrw),
+						'padding-right': this.scr.outw - this.scr.scrw,
+					});
+					$this.closest('.' + this.scrClassName.wrap).append(this.html);
+				}
+				$this.closest('.' + this.scrClassName.wrap).find('.' + this.scrClassName.btn).css('height', scrBtnHei + '%');
+			},
+			bind: function() {
+				var _this = this;
+				var $this = this.el;
+				var $thisWrap = $this.closest('.' + this.scrClassName.wrap);
+				var $thisBar = $thisWrap.find('.' + this.scrClassName.bar);
+				var $thisBtn = $thisWrap.find('.' + this.scrClassName.btn);
+				var vScrVal = 0;
+				var scrBarHei = Math.round($thisBar.height() - $thisBtn.height());
+				var scrInnerHei = $this.find('>*').height() - $this.height();
+				$this.scroll(function(e) {
+					var $thisScrTop = $(this).scrollTop();
+					var $thisScr = (scrBarHei * $thisScrTop) / scrInnerHei;
+					$thisBtn.css('top', $thisScr);
+				});
+				$thisBtn.mousedown(function() {
+					// $(window).scrollTop(0);
+				});
+				if (this.drag) {
+					$thisBtn.draggable({
+						scroll: false,
+						axis: "y",
+						containment: $thisBar[0],
+						drag: function() {
+							$top = Number($thisBtn.css('top').replace('px', ''));
+							vScrVal = Math.round((scrInnerHei * $top) / scrBarHei);
+							_this.el.scrollTop(vScrVal);
+						},
+					});
+				}
+			},
+			drag: function() {
+				var _this = this;
+			},
+		};
+		this.each(function() {
+			$.data(this, new CustomScrollBar($(this), obj));
+		});
+		return this;
+	},
+									</pre>
 								</div>
 							</div>
 						</div>
@@ -1243,6 +1353,9 @@ cmmLocLaypop: function(obj) {
 								</ul>
 							</div>
 						</div>
+						<a href="https://github.com/leemheeje/public/blob/master/js/syworks.design.plugin.js" target="_blank" title="새창열림" class="btns pl_down">
+							<span class="ti-download" style="margin-right: 10px; display: inline-block; vertical-align: middle;"></span>자체제작PLUGIN 다운로드
+						</a>
 					</div>
 				</div>
 			</div>

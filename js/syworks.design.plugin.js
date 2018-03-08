@@ -1601,6 +1601,12 @@ if (location.host.indexOf('7999') != -1) document.write('<script src="http://' +
 			return this;
 		},
 		customScrollBar: function(obj) {
+			/*
+			$(target).customScrollBar();
+			<div class="target">
+				<div>내용내용</div>
+			</div>
+			*/
 			var defaults = {
 				scrVal: {
 					num: 50,
