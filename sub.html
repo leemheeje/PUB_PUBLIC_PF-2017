@@ -117,6 +117,12 @@
 					}
 					if (items[params].href) {
 						if (items[params].href.indexOf('http') == -1) {
+							/*$('.bt01 a').click(function(){
+								$(this).cmmAlert({
+									msg : items[params].href
+								});
+								return false;
+							});*/
 							$('.bt01 a').prop('href', 'javascript: alert("' + items[params].href + '")');
 						} else {
 							$('.bt01 a').prop('href', items[params].href);

@@ -67,19 +67,25 @@
 							ease: 'easeOutExpo',
 						},
 						renderAfterCallb: function() {
-							$('.item > a').each(function() {
-								var $this = $(this);
-								var $thisHeight = $this.height();
-								var ry = $thisHeight > 320 ? '5' : '3';
-								$this.musMoveDragPraxx({
-									motions: [
-										[$this, '2', '8', '8', '5', ry],
-									],
-								});
-							});
+							if (!$('html').is('.ie') || $('html').is('.ie11')) {
+								renderCallb();
+							}
 						}
 					});
+				}
 
+				function renderCallb() {
+					$('.item > a').each(function() {
+						var $this = $(this);
+						var $thisHeight = $this.height();
+						var ry = $thisHeight > 320 ? '10' : '7';
+						$this.musMoveDragPraxx({
+							motions: [
+								[$this, '2', '3', '5', '10', ry],
+								[$this.find('.ppgr_img'), '1', '20', '0', '10', '0'],
+							],
+						});
+					});
 				}
 			});
 			</script>

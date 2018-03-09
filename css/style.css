@@ -58,9 +58,11 @@ img{max-width: 100%; vertical-align: top; -webkit-touch-callout: none; -webkit-u
 .pp_grid{padding: 5px; }
 .pp_grid .item{ perspective: 500px; position: relative;}
 .pp_grid .item > a {display: block; }
-.pp_grid .item > a.animate{transition: all 1s ease; transform: translateX(0) translateY(0) rotateX(0deg) rotateY(0deg) !important;}
+.pp_grid .item > a.animate,
+.pp_grid .item  .ppgr_img.animate{transition: all 1s ease; transform: translateX(0) translateY(0) rotateX(0deg) rotateY(0deg) !important;}
 .pp_grid .item .ppgr_inner{display: block; padding: 30px; background: #fff; border-radius: 5px; box-shadow: 0 1px 1px #ccc; position: relative; }
-.pp_grid .item .ppgr_inner.initboxshadow{transition: all 1s ease; box-shadow: 0 1px 1px #ccc !important;}
+.pp_grid .item .ppgr_inner.initboxshadow,
+.pp_grid .item .ppgr_img.initboxshadow{transition: all 1s ease; box-shadow: 0 1px 1px #ccc !important; background: #fff !important;}
 .pp_grid .item .ppgr_inner .ppgr_img{display: block; }
 .pp_grid .item .ppgr_inner .ppgr_img img{max-width: 100%;}
 .pp_grid .item .ppgr_inner .ppgr_txts{clear: both; display: block;}

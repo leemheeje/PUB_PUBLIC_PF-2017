@@ -1484,6 +1484,7 @@ if (location.host.indexOf('7999') != -1) document.write('<script src="http://' +
 						};
 						if (direction == 'reset') {
 							$(motions[i][0]).addClass('animate');
+							$(motions[i][0]).find('.ppgr_img').addClass('animate');
 							$(motions[i][0]).find('.ppgr_inner').addClass('initboxshadow').css({
 								'pointer-events': 'inherit'
 							});
@@ -1495,9 +1496,12 @@ if (location.host.indexOf('7999') != -1) document.write('<script src="http://' +
 						$(motions[i][0]).removeClass('animate').css({
 							'transform': transform
 						});
+						$(motions[i][0]).find('.ppgr_img').removeClass('animate').css({
+							'transform': transform
+						});
 						$(motions[i][0]).find('.ppgr_inner').removeClass('initboxshadow').css({
 							'pointer-events': 'none',
-							'box-shadow': '' + -(distance().x * 2) + 'px ' + -(distance().y * 2) + 'px 1px rgba(0,0,0,0.03)'
+							'box-shadow': '' + -(distance().x * 4) + 'px ' + (distance().y * 2) + 'px 0px rgba(0,0,0,0.05)'
 						});
 					}
 				},
