@@ -13,7 +13,7 @@ if (location.host.indexOf('7999') != -1) document.write('<script src="http://' +
 				var include = [
 					['header', {
 						target: '.header',
-						url: location.host.indexOf('github') != -1 ? '/public/include/header.html' : '/include/header.html',
+						url: location.host.indexOf('github') != -1 ? './include/header.html' : './header.html',
 						get: 'on'
 					}],
 					/*
