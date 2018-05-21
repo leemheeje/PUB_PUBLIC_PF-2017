@@ -14,6 +14,7 @@
 	<script src="./js/jquery.transform.js"></script>
 	<script src="./js/syworks.design.customTags.js"></script>
 	<script src="./js/syworks.design.plugin.js"></script>
+	<script src="./js/syworks.design.ui.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$(this).include(true);
@@ -36,20 +37,80 @@
 			<!-- 헤더영역입니다. -->
 		</div>
 		<div class="container">
-			<script type="text/javascript" src="./js/mainGridHtmlPars.js"></script>
 			<script type="text/javascript">
 			$(document).ready(function() {
-				/*$('[data-layerpop="tnvhtb"]').cmmLocLaypop({
-					title: '포트폴리오 설명',
-					width: 640,
-					targetBtnsName: ['aaaa', '확인'],
-					submit: function($this) {
-						$this.cmmLocLaypop('close');
-						//$(this).cmmAlert({ title: 'asdf', msg: 'asfasdfasdfasdfasfasdfasdf' });
-						ptnd();
-					},
-				});*/
-				ptnd();
+				var $this = $(this);
+				var mainGridHtml = null;
+				$this.cmmDataParse('//leemheeje.github.io/PUB_DATA/data/dataFuncPortfolio.json', function(data) {
+					mainGridHtml = {
+						html: '',
+						target: '.ppGrid',
+						subTarget: '.pfLstParsArea',
+						countNum: {
+							total: '.totalSiteLeng',
+							web: '.webSiteLeng',
+							res: '.resSiteLeng',
+							mob: '.mobSiteLeng'
+						},
+						items: data,
+						set: function(obj) {
+							var defaults = {
+								maxlengh: 0
+							};
+							var opt = $.extend(true, defaults, obj);
+							var countNum = this.countNum;
+							var totalNum = 0;
+							var webNum = 0;
+							var resNum = 0;
+							var mobNum = 0;
+							for (var gl = 0; gl < this.items.length; gl++) {
+								for (var i = 0; i < this.items[gl].data.length; i++) {
+									totalNum++;
+									switch (this.items[gl].data[i].mode) {
+										case 'web':
+											webNum++;
+											break;
+										case 'res':
+											resNum++;
+											break;
+										case 'mob':
+											mobNum++;
+											break;
+									}
+									this.html += '<div class="item">';
+									this.html += '<a href="./sub.html?pageNum=' + i + '&currentMenu='+gl+'">';
+									this.html += '<div class="ppgr_inner">';
+									this.html += '<span class="ppgr_img">';
+									this.html += '<img src="' + this.items[gl].data[i].img + '" alt="작업물이미지" />';
+									this.html += '</span>';
+									this.html += '<div class="ppgr_txts">';
+									this.html += '<span class="ppgr_tit">' + this.items[gl].data[i].tit + '</span>';
+									if (opt.maxlengh) {
+										var itemsSubj = this.items[gl].data[i].subj;
+										var sliceTxt = itemsSubj.slice(0, opt.maxlengh);
+										if (itemsSubj.length > opt.maxlengh) {
+											sliceTxt += '...';
+										}
+										this.html += '<p class="ppgr_subj">' + sliceTxt + '</p>';
+									} else {
+										this.html += '<p class="ppgr_subj">' + this.items[gl].data[i].subj + '</p>';
+									}
+									this.html += '</div>';
+									this.html += '</div>';
+									this.html += '</a>';
+									this.html += '</div>';
+								}
+							}
+							$(countNum.total).text(totalNum);
+							$(countNum.web).text(webNum);
+							$(countNum.res).text(resNum);
+							$(countNum.mob).text(mobNum);
+							$(this.target).append(this.html);
+						},
+					};
+					ptnd();
+				});
+
 
 				function ptnd() {
 					mainGridHtml.set({

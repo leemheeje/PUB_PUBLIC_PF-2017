@@ -14,6 +14,7 @@
 	<script src="./js/jquery.transform.js"></script>
 	<script src="./js/syworks.design.customTags.js"></script>
 	<script src="./js/syworks.design.plugin.js"></script>
+	<script src="./js/syworks.design.ui.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$(this).include(true);
@@ -36,128 +37,135 @@
 			<!-- 헤더영역입니다. -->
 		</div>
 		<div class="container">
-			<script type="text/javascript" src="./js/mainGridHtmlPars.js"></script>
+			<!-- <script type="text/javascript" src="./js/mainGridHtmlPars.js"></script> -->
 			<script type="text/javascript">
 			$(document).ready(function() {
-				var params = $(this).getParams('pageNum');
-				var mod = mainGridHtml.items[params].mode.split(',');
-				var label = '';
-				var txt = '';
-				var aniC = function(obj) {
-					return $.extend(true, {
-						duration: 2500,
-					}, obj);
-				};
-				$('.parmS').html(mainGridHtml.items[params].tit);
-				$('.parmT').html(mainGridHtml.items[params].subj);
-				if (mainGridHtml.items[params].chat) {
-					$('.valNu').animate({
-						'width': mainGridHtml.items[params].chat + '%'
-					}, aniC());
-					$('.valRt').animate({
-						'numUp': mainGridHtml.items[params].chat
-					}, aniC({
-						step: function(a, b, c) {
-							var num = Math.floor(a);
-							$(this).text(num);
+				var $this = $(this);
+				$this.cmmDataParse('//leemheeje.github.io/PUB_DATA/data/dataFuncPortfolio.json', function(data) {
+					var $el = $('.pfLstParsArea');
+					//var params = location.search.replace(/[?a-zA-Z=]/g, '');
+					var params = $(this).getParams('pageNum');
+					var current = $(this).getParams('currentMenu');
+					var html = '';
+					var cnt = 0;
+					var items = data;
+					for (var gl = 0; gl < items.length; gl++) {
+						for (var i = 0; i < items[gl].data.length; i++) {
+							if (params == cnt && current == gl) {
+								html += '<li class="active">';
+							} else {
+								html += '<li>';
+							}
+							try {
+								html += '<a href="./sub.html?pageNum=' + cnt + '&currentMenu='+gl+'">' + items[gl].data[i].tit + '</a>';
+								cnt++;
+							} catch (e) {}
+							html += '</li>';
 						}
-					}));
-				} else {
-					$('.valNu').animate({
-						'width': '100%'
-					}, aniC());
-					$('.valRt').animate({
-						'numUp': 100
-					}, aniC({
-						step: function(a, b, c) {
-							var num = Math.floor(a);
-							$(this).text(num);
+						cnt = 0;
+					}
+					$el.append(html);
+					var params = $(this).getParams('pageNum');
+					var mod = items[current].data[params].mode.split(',');
+					var label = '';
+					var txt = '';
+					var aniC = function(obj) {
+						return $.extend(true, {
+							duration: 2500,
+						}, obj);
+					};
+					$('.parmS').html(items[current].data[params].tit);
+					if(!items[current].data[params].detailsubj){
+						items[current].data[params].detailsubj = '관리자의 코멘트가 등록되어 있지 않습니다.'
+					}
+					$('.parmT').html(items[current].data[params].detailsubj);
+					if (items[current].data[params].chat) {
+						$('.valNu').animate({
+							'width': items[current].data[params].chat + '%'
+						}, aniC());
+						$('.valRt').animate({
+							'numUp': items[current].data[params].chat
+						}, aniC({
+							step: function(a, b, c) {
+								var num = Math.floor(a);
+								$(this).text(num);
+							}
+						}));
+					} else {
+						$('.valNu').animate({
+							'width': '100%'
+						}, aniC());
+						$('.valRt').animate({
+							'numUp': 100
+						}, aniC({
+							step: function(a, b, c) {
+								var num = Math.floor(a);
+								$(this).text(num);
+							}
+						}));
+					}
+					for (var i = 0; i < mod.length; i++) {
+						if (mod[i]) {
+							if (mod[i].indexOf('js') != -1) {
+								txt = '자체개발JS';
+							} else if (mod[i].indexOf('IE') != -1) {
+								txt = mod[i];
+								mod[i] = 'ie';
+							} else {
+								switch (mod[i]) {
+									case 'res':
+										txt = '반응형';
+										break;
+									case 'cms':
+										txt = 'CMS';
+										break;
+									case 'hyb':
+										txt = '하이브리드앱';
+										break;
+									case 'tmc':
+										txt = '접근성';
+										break;
+									case 'epub':
+										txt = '디지털교과서';
+										break;
+								}
+							}
+							label += ' <span class="label ' + mod[i] + '">' + txt + '</span>';
 						}
-					}));
-				}
-				for (var i = 0; i < mod.length; i++) {
-					if (mod[i]) {
-						if (mod[i].indexOf('js') != -1) {
-							txt = '자체개발JS';
-						} else if (mod[i].indexOf('IE') != -1) {
-							txt = mod[i];
-							mod[i] = 'ie';
+					}
+					$('.parmA').append(label);;
+					(function($) {
+						$('.pfImgsParsArea').append('<img src="' + items[current].data[params].img + '" alt="' + items[current].data[params].tit + ' 이미지 1"/>');
+						if (items[current].data[params].subImgs) {
+							for (var i = 0; i < items[current].data[params].subImgs.length; i++) {
+								$('.pfImgsParsArea').append('<img src="' + items[current].data[params].subImgs[i] + '" alt="' + items[current].data[params].tit + ' 이미지' + (i + 2) + '"/>');
+							}
 						} else {
-							switch (mod[i]) {
-								case 'res':
-									txt = '반응형';
-									break;
-								case 'cms':
-									txt = 'CMS';
-									break;
-								case 'hyb':
-									txt = '하이브리드앱';
-									break;
-								case 'tmc':
-									txt = '접근성';
-									break;
-								case 'epub':
-									txt = '디지털교과서';
-									break;
+							$('.pfImgsParsArea').append('<div class="NO_RESULT">등록된 이미지가 없습니다.</div>');
+						}
+						if (items[current].data[params].href) {
+							if (items[current].data[params].href.indexOf('http') == -1) {
+								/*$('.bt01 a').click(function(){
+									$(this).cmmAlert({
+										msg : items[current].data[params].href
+									});
+									return false;
+								});*/
+								$('.bt01 a').prop('href', 'javascript: alert("' + items[current].data[params].href + '")');
+							} else {
+								$('.bt01 a').prop('href', items[current].data[params].href);
 							}
 						}
-						label += ' <span class="label ' + mod[i] + '">' + txt + '</span>';
-					}
-				}
-				$('.parmA').append(label);;
-				(function($) {
-					var items = mainGridHtml.items;
-					$('.pfImgsParsArea').append('<img src="' + items[params].img + '" alt="' + items[params].tit + ' 이미지 1"/>');
-					if (items[params].subImgs) {
-						for (var i = 0; i < items[params].subImgs.length; i++) {
-							$('.pfImgsParsArea').append('<img src="' + items[params].subImgs[i] + '" alt="' + items[params].tit + ' 이미지' + (i + 2) + '"/>');
-						}
-					} else {
-						$('.pfImgsParsArea').append('<div class="NO_RESULT">등록된 이미지가 없습니다.</div>');
-					}
-					if (items[params].href) {
-						if (items[params].href.indexOf('http') == -1) {
-							/*$('.bt01 a').click(function(){
-								$(this).cmmAlert({
-									msg : items[params].href
+						$('.bt02 a').click(function() {
+							if ($(window).scrollTop() != 0) {
+								$('html, body').stop().animate({
+									scrollTop: 0,
 								});
-								return false;
-							});*/
-							$('.bt01 a').prop('href', 'javascript: alert("' + items[params].href + '")');
-						} else {
-							$('.bt01 a').prop('href', items[params].href);
-						}
-					}
-					$('.bt02 a').click(function() {
-						if ($(window).scrollTop() != 0) {
-							$('html, body').stop().animate({
-								scrollTop: 0,
-							});
-						}
-						return false;
-					});
-					$('.bt04 a').click(function() {
-						var nextpage = null;
-						if (params < items.length - 1) {
-							nextpage = Number(params) + 1;
-						} else {
-							nextpage = 0;
-						}
-						location.href = '?pageNum=' + nextpage + '?currenMenu=0';
-						return false;
-					});
-					$('.bt03 a').click(function() {
-						var prevpage = null;
-						if (params != 0) {
-							prevpage = Number(params) - 1;
-						} else {
-							prevpage = items.length - 1
-						}
-						location.href = '?pageNum=' + prevpage + '?currenMenu=0';
-						return false;
-					});
-				})(jQuery);
-				mainGridHtml.pfPars();
+							}
+							return false;
+						});
+					})(jQuery);
+				});
 			});
 			</script>
 			<div class="contents">
@@ -198,7 +206,7 @@
 										<span class="ti-angle-up"></span>
 									</a>
 								</li>
-								<li class="bt03">
+								<!-- <li class="bt03">
 									<a href="#" title="이전포트폴리오">
 										<span class="ti-angle-left"></span>
 									</a>
@@ -207,7 +215,7 @@
 									<a href="#" title="다음포트폴리오">
 										<span class="ti-angle-right"></span>
 									</a>
-								</li>
+								</li> -->
 							</ul>
 						</div>
 					</div>
